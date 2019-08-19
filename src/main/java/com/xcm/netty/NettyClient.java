@@ -1,4 +1,4 @@
-package com.xcm;
+package com.xcm.netty;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -7,8 +7,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
 public class NettyClient implements Runnable {
@@ -28,19 +26,23 @@ public class NettyClient implements Runnable {
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
 					ChannelPipeline pipeline = ch.pipeline();
-					pipeline.addLast(new LengthFieldBasedFrameDecoder(1024, 0,
-							4, 0, 4));
+//					pipeline.addLast(new LengthFieldBasedFrameDecoder(1024, 0,
+//							4, 0, 4));
+//
+//					// encoded
+//					pipeline.addLast(new LengthFieldPrepender(4));
+//					pipeline.addLast(new IdleStateHandler(20, 10, 5));
+                    pipeline.addLast(new Decoder());
+                    pipeline.addLast(new Encoder());
 
-					// encoded
-					pipeline.addLast(new LengthFieldPrepender(4));
-					pipeline.addLast(new IdleStateHandler(20, 10, 5));
-					pipeline.addLast(new ClientHandler());
+                    pipeline.addLast(new ClientHandler());
 
 				}
 			});
-			ChannelFuture f = b.connect("127.0.0.1", 5656).sync();
+			Channel channel = b.connect("127.0.0.1", 5656).sync().channel();
 
-			f.channel().closeFuture().sync();
+
+			channel.closeFuture().sync();
 
 		} catch (Exception e) {
 
