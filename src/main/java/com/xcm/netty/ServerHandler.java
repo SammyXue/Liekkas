@@ -1,12 +1,12 @@
 package com.xcm.netty;
 
 
+import com.xcm.proto.Protocol;
+import com.xcm.service.core.MessageHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.timeout.IdleStateEvent;
 
-import java.lang.ref.WeakReference;
 import java.net.InetSocketAddress;
 
 
@@ -17,7 +17,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println(String.format("====== 客户端连接 ===== : %s",
 				ctx.channel().toString()));
-//		ctx.writeAndFlush("客户端连接 channelActive :"+ctx.channel().toString());
 
 		
 	}
@@ -26,10 +25,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg)
 			throws Exception {
 		String channelKey = getChannelKey(ctx.channel());
-		ctx.writeAndFlush(msg);
 
 		System.out.println("msg received from: + " + channelKey+"\n "+msg);
 
+		MessageHandler.handleRequest(ctx, (Protocol.Request) msg);
 	}
 
 	@Override

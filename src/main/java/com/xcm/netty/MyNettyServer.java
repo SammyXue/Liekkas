@@ -1,11 +1,14 @@
 package com.xcm.netty;
 
+import com.xcm.proto.Protocol;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
@@ -40,18 +43,14 @@ public class MyNettyServer {
             protected void initChannel(Channel ch) throws Exception {
 
                 ChannelPipeline pipeline = ch.pipeline();
-//                pipeline.addLast(new IdleStateHandler(120, 40, 0,
-//                        TimeUnit.SECONDS));
-//                // decoded
-//                pipeline.addLast(new LengthFieldBasedFrameDecoder(
-//                        MAX_FRAME_LENGTH, 0, 4, 0, 4));
-//                // encoded
-//                pipeline.addLast(new LengthFieldPrepender(4));
-//                pipeline.addLast(new ProtobufEncoder());
-
-                // 注册handler
-                pipeline.addLast(new Decoder());
-                pipeline.addLast(new Encoder());
+                // decoded
+                pipeline.addLast(new LengthFieldBasedFrameDecoder(
+                        MAX_FRAME_LENGTH, 0, 4, 0, 4));
+                pipeline.addLast(new ProtobufDecoder(Protocol.Request
+                        .getDefaultInstance()));
+                // encoded
+                pipeline.addLast(new LengthFieldPrepender(4));
+                pipeline.addLast(new ProtobufEncoder());
 
                 pipeline.addLast(new ServerHandler());
             }
@@ -65,7 +64,7 @@ public class MyNettyServer {
 //        f.channel().closeFuture().sync();
     }
 
-    protected static void addShutdownHook() {
+    public static void addShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(()->{
             System.out.println("开始关闭netty服务器...");
             workerGroup.shutdownGracefully();

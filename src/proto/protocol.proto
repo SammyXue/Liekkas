@@ -1,0 +1,32 @@
+package com.xcm.proto;
+
+message RequestHeader {
+    required int32 version = 1 [default = 1]; //版本号
+    required string command = 2 [default = "heartBeat"]; //command
+}
+
+message RequestBody {
+    repeated Param param = 1;
+}
+message Param {
+    required string key = 1;
+    required string value = 2;
+
+}
+
+message Request {
+    required RequestHeader header = 1;
+    required RequestBody body = 2;
+
+}
+
+message ResponseHeader {
+    required int32 version = 1 [default = 1]; //版本号
+}
+
+
+message Response {
+    required ResponseHeader header = 1;
+    required bytes body = 2;
+
+}

@@ -1,0 +1,1 @@
+protoc -I=D:\xgame\src\proto --java_out=D:\xgame\src\main\java\ D:\xgame\src\proto/protocol.proto

@@ -1,5 +1,6 @@
 package com.xcm.netty;
 
+import com.xcm.proto.Protocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,12 +16,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 
 
-        ByteBuf firstMessage = Unpooled.buffer(128);
-        firstMessage.writeBytes("郑梦琦".getBytes());
+
 
 
         System.out.println("开始同步~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        ctx.writeAndFlush(firstMessage);
+
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         System.out.println("received msg:");
         System.out.println(msg);
-        ctx.writeAndFlush(msg);
+//        ctx.writeAndFlush(msg);
 
         /*
          * Person.User user = (User) msg; logger.info("client接收到服务器返回的消息:" +
