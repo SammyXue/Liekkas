@@ -12,8 +12,9 @@ public class MessageCreater {
                 .setCommand(command.name())
                 .build();
         Protocol.RequestBody.Builder bodyBuilder = Protocol.RequestBody.newBuilder();
-        for (int i = 0; i < params.length; i++) {
-            bodyBuilder.setParam(i, params[i]);
+        for (Protocol.Param param : params) {
+            bodyBuilder.addParam(param);
+
         }
         Protocol.RequestBody body = bodyBuilder.build();
         Protocol.Request request = Protocol.Request.newBuilder()

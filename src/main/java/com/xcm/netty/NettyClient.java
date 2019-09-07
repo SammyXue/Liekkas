@@ -49,13 +49,15 @@ public class NettyClient implements Runnable {
 			});
 			Channel channel = b.connect("127.0.0.1", 5656).sync().channel();
 
+			Protocol.Param userId = Protocol.Param.newBuilder().setKey("userId").setValue("123").build();
+			Protocol.Param password = Protocol.Param.newBuilder().setKey("password").setValue("123").build();
+				channel.writeAndFlush(MessageCreater.generateRequest(Command.Login,userId));
 
-			channel.writeAndFlush(MessageCreater.generateRequest(Command.HelloWord));
 
 			channel.closeFuture().sync();
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
 			group.shutdownGracefully();
 		}

@@ -9,6 +9,8 @@ import java.util.Map;
 public enum Command {
 
     HelloWord,
+    Login,
+    LogOut,
     ;
     static Map<String, Command> commandMap = new HashMap<>();
 

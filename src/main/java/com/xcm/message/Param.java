@@ -7,9 +7,12 @@ import java.lang.annotation.*;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({
-        ElementType.METHOD,
+        ElementType.PARAMETER,
 })
 @Documented
-public @interface Path {
-    Command value();
+public @interface Param {
+
+    String value();
+
+
 }
