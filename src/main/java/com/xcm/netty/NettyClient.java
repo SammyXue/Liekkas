@@ -51,7 +51,9 @@ public class NettyClient implements Runnable {
 
 			Protocol.Param userId = Protocol.Param.newBuilder().setKey("userId").setValue("123").build();
 			Protocol.Param password = Protocol.Param.newBuilder().setKey("password").setValue("123").build();
-				channel.writeAndFlush(MessageCreater.generateRequest(Command.Login,userId));
+			Protocol.Param sessionId = Protocol.Param.newBuilder().setKey("session").setValue("sessions").build();
+
+			channel.writeAndFlush(MessageCreater.generateRequest(Command.Login,userId,password,sessionId));
 
 
 			channel.closeFuture().sync();

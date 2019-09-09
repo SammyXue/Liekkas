@@ -9,6 +9,8 @@ import java.util.Map;
 public enum Command {
 
     HelloWord,
+    TestException,
+    TestStandardException,
     Login,
     LogOut,
     ;

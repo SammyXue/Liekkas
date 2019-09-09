@@ -22,6 +22,9 @@ message Request {
 
 message ResponseHeader {
     required int32 version = 1 [default = 1]; //版本号
+    required int32 msgType = 2 [default = 1]; //msg type 1接口返回 2 推送
+    optional int32 state = 3;// 当接口返回时 有这个字段 1 success 2 fail
+
 }
 
 

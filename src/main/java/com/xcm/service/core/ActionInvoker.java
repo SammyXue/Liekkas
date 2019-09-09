@@ -1,8 +1,8 @@
 package com.xcm.service.core;
 
-import com.xcm.message.Param;
-import com.xcm.message.ParamTransfer;
-import com.xcm.message.ParamTransferFactory;
+import com.google.protobuf.ByteString;
+import com.xcm.exception.StandardSystemException;
+import com.xcm.message.*;
 import com.xcm.proto.Protocol;
 
 import java.lang.reflect.InvocationTargetException;
@@ -21,9 +21,34 @@ public class ActionInvoker {
         this.object = object;
     }
 
-    public Object invoke(Protocol.Request request) throws InvocationTargetException, IllegalAccessException {
+    public Object invoke(Protocol.Request request)  {
+        try{
+            return method.invoke(object, getParams(request));
 
-        return method.invoke(object, getParams(request));
+        }catch (Exception e){
+//            Log.err
+            e.printStackTrace();
+            return genErrorResponse(e);
+        }
+    }
+
+    public Protocol.Response genErrorResponse(Exception e){
+        Protocol.ResponseHeader header = Protocol.ResponseHeader.newBuilder().setVersion(1)
+                .setMsgType(MsgType.ECHO.getValue())
+                .setState(State.FAIL.getValue())
+                .build();
+        String errMsg = "Error Occurred in Server";
+        if (e instanceof InvocationTargetException){
+            if (((InvocationTargetException) e).getTargetException() instanceof StandardSystemException){
+                errMsg = ((StandardSystemException) ((InvocationTargetException) e).getTargetException()).getErrorMsg();
+            }
+        }
+
+
+        Protocol.Response response = Protocol.Response.newBuilder()
+                .setHeader(header)
+                .setBody(ByteString.copyFrom(errMsg.getBytes())).build();
+        return response;
     }
 
     public Object[] getParams(Protocol.Request request){
@@ -38,8 +63,13 @@ public class ActionInvoker {
 
             Param param = parameter.getAnnotation(Param.class);
             if (param==null){
+                if (parameter.getType() ==StandardRequest.class){
+                    params[i] = new StandardRequest(request);
+                }
                 continue;
             }
+
+
             String key = param.value();
 
 

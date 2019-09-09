@@ -2744,6 +2744,40 @@ public final class Protocol {
      * </pre>
      */
     int getVersion();
+
+    /**
+     * <code>required int32 msgType = 2 [default = 1];</code>
+     *
+     * <pre>
+     *msg type 1接口返回 2 推送
+     * </pre>
+     */
+    boolean hasMsgType();
+    /**
+     * <code>required int32 msgType = 2 [default = 1];</code>
+     *
+     * <pre>
+     *msg type 1接口返回 2 推送
+     * </pre>
+     */
+    int getMsgType();
+
+    /**
+     * <code>optional int32 state = 3;</code>
+     *
+     * <pre>
+     * 当接口返回时 有这个字段 1 success 2 fail
+     * </pre>
+     */
+    boolean hasState();
+    /**
+     * <code>optional int32 state = 3;</code>
+     *
+     * <pre>
+     * 当接口返回时 有这个字段 1 success 2 fail
+     * </pre>
+     */
+    int getState();
   }
   /**
    * Protobuf type {@code com.xcm.proto.ResponseHeader}
@@ -2800,6 +2834,16 @@ public final class Protocol {
             case 8: {
               bitField0_ |= 0x00000001;
               version_ = input.readInt32();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              msgType_ = input.readInt32();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              state_ = input.readInt32();
               break;
             }
           }
@@ -2865,8 +2909,56 @@ public final class Protocol {
       return version_;
     }
 
+    public static final int MSGTYPE_FIELD_NUMBER = 2;
+    private int msgType_;
+    /**
+     * <code>required int32 msgType = 2 [default = 1];</code>
+     *
+     * <pre>
+     *msg type 1接口返回 2 推送
+     * </pre>
+     */
+    public boolean hasMsgType() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 msgType = 2 [default = 1];</code>
+     *
+     * <pre>
+     *msg type 1接口返回 2 推送
+     * </pre>
+     */
+    public int getMsgType() {
+      return msgType_;
+    }
+
+    public static final int STATE_FIELD_NUMBER = 3;
+    private int state_;
+    /**
+     * <code>optional int32 state = 3;</code>
+     *
+     * <pre>
+     * 当接口返回时 有这个字段 1 success 2 fail
+     * </pre>
+     */
+    public boolean hasState() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional int32 state = 3;</code>
+     *
+     * <pre>
+     * 当接口返回时 有这个字段 1 success 2 fail
+     * </pre>
+     */
+    public int getState() {
+      return state_;
+    }
+
     private void initFields() {
       version_ = 1;
+      msgType_ = 1;
+      state_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2875,6 +2967,10 @@ public final class Protocol {
       if (isInitialized == 0) return false;
 
       if (!hasVersion()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasMsgType()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -2888,6 +2984,12 @@ public final class Protocol {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, version_);
       }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, msgType_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, state_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -2900,6 +3002,14 @@ public final class Protocol {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, version_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, msgType_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, state_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3020,6 +3130,10 @@ public final class Protocol {
         super.clear();
         version_ = 1;
         bitField0_ = (bitField0_ & ~0x00000001);
+        msgType_ = 1;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        state_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -3052,6 +3166,14 @@ public final class Protocol {
           to_bitField0_ |= 0x00000001;
         }
         result.version_ = version_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.msgType_ = msgType_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.state_ = state_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3071,12 +3193,22 @@ public final class Protocol {
         if (other.hasVersion()) {
           setVersion(other.getVersion());
         }
+        if (other.hasMsgType()) {
+          setMsgType(other.getMsgType());
+        }
+        if (other.hasState()) {
+          setState(other.getState());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasVersion()) {
+          
+          return false;
+        }
+        if (!hasMsgType()) {
           
           return false;
         }
@@ -3146,6 +3278,102 @@ public final class Protocol {
       public Builder clearVersion() {
         bitField0_ = (bitField0_ & ~0x00000001);
         version_ = 1;
+        onChanged();
+        return this;
+      }
+
+      private int msgType_ = 1;
+      /**
+       * <code>required int32 msgType = 2 [default = 1];</code>
+       *
+       * <pre>
+       *msg type 1接口返回 2 推送
+       * </pre>
+       */
+      public boolean hasMsgType() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int32 msgType = 2 [default = 1];</code>
+       *
+       * <pre>
+       *msg type 1接口返回 2 推送
+       * </pre>
+       */
+      public int getMsgType() {
+        return msgType_;
+      }
+      /**
+       * <code>required int32 msgType = 2 [default = 1];</code>
+       *
+       * <pre>
+       *msg type 1接口返回 2 推送
+       * </pre>
+       */
+      public Builder setMsgType(int value) {
+        bitField0_ |= 0x00000002;
+        msgType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 msgType = 2 [default = 1];</code>
+       *
+       * <pre>
+       *msg type 1接口返回 2 推送
+       * </pre>
+       */
+      public Builder clearMsgType() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        msgType_ = 1;
+        onChanged();
+        return this;
+      }
+
+      private int state_ ;
+      /**
+       * <code>optional int32 state = 3;</code>
+       *
+       * <pre>
+       * 当接口返回时 有这个字段 1 success 2 fail
+       * </pre>
+       */
+      public boolean hasState() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional int32 state = 3;</code>
+       *
+       * <pre>
+       * 当接口返回时 有这个字段 1 success 2 fail
+       * </pre>
+       */
+      public int getState() {
+        return state_;
+      }
+      /**
+       * <code>optional int32 state = 3;</code>
+       *
+       * <pre>
+       * 当接口返回时 有这个字段 1 success 2 fail
+       * </pre>
+       */
+      public Builder setState(int value) {
+        bitField0_ |= 0x00000004;
+        state_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 state = 3;</code>
+       *
+       * <pre>
+       * 当接口返回时 有这个字段 1 success 2 fail
+       * </pre>
+       */
+      public Builder clearState() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        state_ = 0;
         onChanged();
         return this;
       }
@@ -3820,9 +4048,10 @@ public final class Protocol {
       "\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"a\n\007Request\022,\n\006" +
       "header\030\001 \002(\0132\034.com.xcm.proto.RequestHead" +
       "er\022(\n\004body\030\002 \002(\0132\032.com.xcm.proto.Request" +
-      "Body\"$\n\016ResponseHeader\022\022\n\007version\030\001 \002(\005:" +
-      "\0011\"G\n\010Response\022-\n\006header\030\001 \002(\0132\035.com.xcm" +
-      ".proto.ResponseHeader\022\014\n\004body\030\002 \002(\014"
+      "Body\"G\n\016ResponseHeader\022\022\n\007version\030\001 \002(\005:" +
+      "\0011\022\022\n\007msgType\030\002 \002(\005:\0011\022\r\n\005state\030\003 \001(\005\"G\n" +
+      "\010Response\022-\n\006header\030\001 \002(\0132\035.com.xcm.prot",
+      "o.ResponseHeader\022\014\n\004body\030\002 \002(\014"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3865,7 +4094,7 @@ public final class Protocol {
     internal_static_com_xcm_proto_ResponseHeader_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_ResponseHeader_descriptor,
-        new java.lang.String[] { "Version", });
+        new java.lang.String[] { "Version", "MsgType", "State", });
     internal_static_com_xcm_proto_Response_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_com_xcm_proto_Response_fieldAccessorTable = new
