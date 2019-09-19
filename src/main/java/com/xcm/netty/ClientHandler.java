@@ -30,18 +30,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         System.out.println("received msg:");
         System.out.println(msg);
-//        ctx.writeAndFlush(msg);
+        ctx.fireChannelRead(msg);
 
-        /*
-         * Person.User user = (User) msg; logger.info("client接收到服务器返回的消息:" +
-         * user.getId()); logger.info("client接收到服务器返回的消息:" + user.getName());
-         */
-        // channelActive(ctx);
-        /*
-         * Respone.ResponeMsg responeMsg = (ResponeMsg) msg; Login.LoginRes
-         * loginRes = Login.LoginRes .parseFrom(responeMsg.getBody());
-         * System.out.println("结果" + loginRes.getResCode());
-         */
     }
 
     @Override

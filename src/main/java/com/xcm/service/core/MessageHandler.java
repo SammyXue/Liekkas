@@ -1,6 +1,7 @@
 package com.xcm.service.core;
 
 import com.xcm.message.Command;
+import com.xcm.message.StandardRequest;
 import com.xcm.proto.Protocol;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -16,10 +17,10 @@ public class MessageHandler {
 
     static ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    public static void handleRequest(ChannelHandlerContext ctx, Protocol.Request request) {
+    public static void handleRequest(ChannelHandlerContext ctx, StandardRequest request) {
         executorService.execute(() -> {
             try {
-                Command command = Command.getCommandByName(request.getHeader().getCommand());
+                Command command = Command.getCommandByName(request.getProtocolRequest().getHeader().getCommand());
                 ActionInvoker invoker = commandHandleMap.get(command);
                 if (invoker == null) {
 //                    log

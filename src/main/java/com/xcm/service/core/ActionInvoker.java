@@ -13,29 +13,30 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ActionInvoker {
-    private Method method;
-    private Object object;
+     Method method;
+     Object object;
 
     public ActionInvoker(Method method, Object object) {
         this.method = method;
         this.object = object;
     }
 
-    public Object invoke(Protocol.Request request) {
+    public Object invoke(StandardRequest request) {
         try {
             return method.invoke(object, getParams(request));
 
         } catch (Exception e) {
 //            Log.err
             e.printStackTrace();
-            return genErrorResponse(e);
+            return genErrorResponse(e,"");
         }
     }
 
-    public Protocol.Response genErrorResponse(Exception e) {
+     Protocol.Response genErrorResponse(Exception e, String requestId) {
         Protocol.ResponseHeader header = Protocol.ResponseHeader.newBuilder().setVersion(1)
                 .setMsgType(MsgType.ECHO.getValue())
                 .setState(State.FAIL.getValue())
+                .setResponseId(requestId)
                 .build();
         String errMsg = "Error Occurred in Server";
         if (e instanceof InvocationTargetException) {
@@ -51,11 +52,7 @@ public class ActionInvoker {
         return response;
     }
 
-    public Object[] getParams(Protocol.Request request) {
-        Map<String, String> paramKeyValue = new HashMap<>();
-        for (Protocol.Param param : request.getBody().getParamList()) {
-            paramKeyValue.put(param.getKey(), param.getValue());
-        }
+    public Object[] getParams(StandardRequest request) {
 
         Object[] params = new Object[method.getParameterCount()];
         for (int i = 0; i < method.getParameters().length; i++) {
@@ -64,7 +61,8 @@ public class ActionInvoker {
             Param param = parameter.getAnnotation(Param.class);
             if (param == null) {
                 if (parameter.getType() == StandardRequest.class) {
-                    params[i] = new StandardRequest(request);
+                    params[i] = request;
+                    continue;
                 } else {
                     throw new RuntimeException("lack of  @param on parameter ,method :"+method.getDeclaringClass().getName()+"."+method.getName());
                 }
@@ -75,7 +73,7 @@ public class ActionInvoker {
 
 
             ParamTransfer paramTransfer = ParamTransferFactory.getByParamType(parameter.getType());
-            Object value = paramTransfer.transferTo(paramKeyValue.get(key));
+            Object value = paramTransfer.transferTo(request.getParamValue(key));
             params[i] = value;
         }
         return params;

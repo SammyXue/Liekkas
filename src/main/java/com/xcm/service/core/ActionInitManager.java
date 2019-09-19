@@ -20,13 +20,19 @@ public class ActionInitManager extends ApplicationObjectSupport implements InitM
                     for (Method method : clazz.getDeclaredMethods()) {
                         Path path = method.getAnnotation(Path.class);
                         if (path != null) {
-                            ActionInvoker actionInvoker = new ActionInvoker(method, bean);
+                            ActionInvoker actionInvoker;
+                            if (path.rpc()) {
+                                actionInvoker = new ActionInvoker(method, bean);
+
+                            } else {
+                                actionInvoker  = new RpcInvoker(method,bean);
+                            }
                             MessageHandler.commandHandleMap.put(path.value(), actionInvoker);
                         }
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

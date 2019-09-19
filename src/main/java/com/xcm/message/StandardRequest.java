@@ -24,8 +24,15 @@ public class StandardRequest {
         }
     }
 
+    public Protocol.Request getProtocolRequest() {
+        return protocolRequest;
+    }
+
     public Session getSession() {
         return session;
     }
 
+    public String getParamValue(String key) {
+        return params.get(key);
+    }
 }

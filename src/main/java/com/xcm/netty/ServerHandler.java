@@ -1,6 +1,7 @@
 package com.xcm.netty;
 
 
+import com.xcm.message.StandardRequest;
 import com.xcm.proto.Protocol;
 import com.xcm.service.core.MessageHandler;
 import io.netty.channel.Channel;
@@ -15,8 +16,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		System.out.println(String.format("====== 客户端连接 ===== : %s",
-				ctx.channel().toString()));
+//		System.out.println(String.format("====== 客户端连接 ===== : %s",
+//				ctx.channel().toString()));
 
 		
 	}
@@ -26,15 +27,15 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 			throws Exception {
 		String channelKey = getChannelKey(ctx.channel());
 
-		System.out.println("msg received from: + " + channelKey+"\n "+msg);
+//		System.out.println("msg received from: + " + channelKey+"\n "+msg);
 
-		MessageHandler.handleRequest(ctx, (Protocol.Request) msg);
+		MessageHandler.handleRequest(ctx, (StandardRequest) msg);
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
-		System.out.println("客户端断开连接============" + ctx.channel().toString());
+//		System.out.println("客户端断开连接============" + ctx.channel().toString());
 
 
 		super.channelInactive(ctx);

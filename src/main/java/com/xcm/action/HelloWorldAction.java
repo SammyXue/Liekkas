@@ -27,14 +27,16 @@ public class HelloWorldAction extends BaseAction {
 
     @Path(Command.Login)
     public Protocol.Response Login(@Param("userId") long userId, @Param("password") String password, StandardRequest request) {
-        if (request.getSession()==null){
+        if (request.getSession() == null) {
             Session session = SessionManager.getInstance().createNewSession();
-            session.addAttribute("userId",userId);
+            session.addAttribute("userId", userId);
         }
-        return getResult("success".getBytes());
+        return getResult("success".getBytes(),request);
     }
 
-    @Path(Command.LogOut)
+
+
+    @Path(value = Command.LogOut, rpc = true)
     public Protocol.Response logOut(StandardRequest request) {
         SessionManager.getInstance().remove(request.getSession());
         return getResult("success".getBytes());

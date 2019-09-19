@@ -14,20 +14,18 @@ import io.netty.handler.timeout.IdleStateHandler;
 import java.util.concurrent.TimeUnit;
 
 
-
 public class MyNettyServer {
     private static final String IP = "localhost";
     private static final int PORT = 5656;
     private static final int BIZGROUPSIZE = Runtime.getRuntime()
             .availableProcessors() * 2;
-    private static final int BIZTHREADSIZE =100;
+    private static final int BIZTHREADSIZE = 100;
     private static final int MAX_FRAME_LENGTH = 10240;
 
     private static final EventLoopGroup bossGroup = new NioEventLoopGroup(
             BIZGROUPSIZE);
     private static final EventLoopGroup workerGroup = new NioEventLoopGroup(
             BIZTHREADSIZE);
-
 
 
     public static void service() throws Exception {
@@ -48,6 +46,7 @@ public class MyNettyServer {
                         MAX_FRAME_LENGTH, 0, 4, 0, 4));
                 pipeline.addLast(new ProtobufDecoder(Protocol.Request
                         .getDefaultInstance()));
+                pipeline.addLast(new StandardRequestDecoder());
                 // encoded
                 pipeline.addLast(new LengthFieldPrepender(4));
                 pipeline.addLast(new ProtobufEncoder());
@@ -58,14 +57,14 @@ public class MyNettyServer {
         });
         bootstrap.option(ChannelOption.SO_BACKLOG, 128);
         bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
-         bootstrap.bind(IP, PORT).sync();
+        bootstrap.bind(IP, PORT).sync();
         System.out.println("服务器已启动");
         System.out.println("Binding port: " + PORT);
 //        f.channel().closeFuture().sync();
     }
 
     public static void addShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(()->{
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("开始关闭netty服务器...");
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();

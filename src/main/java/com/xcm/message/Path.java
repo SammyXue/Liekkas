@@ -12,4 +12,5 @@ import java.lang.annotation.*;
 @Documented
 public @interface Path {
     Command value();
+    boolean rpc() default false;
 }

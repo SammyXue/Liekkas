@@ -54,6 +54,23 @@ public final class Protocol {
      */
     com.google.protobuf.ByteString
         getCommandBytes();
+
+    /**
+     * <code>required int32 type = 3;</code>
+     *
+     * <pre>
+     *请求种类 1 客户端请求 2 rpc
+     * </pre>
+     */
+    boolean hasType();
+    /**
+     * <code>required int32 type = 3;</code>
+     *
+     * <pre>
+     *请求种类 1 客户端请求 2 rpc
+     * </pre>
+     */
+    int getType();
   }
   /**
    * Protobuf type {@code com.xcm.proto.RequestHeader}
@@ -116,6 +133,11 @@ public final class Protocol {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
               command_ = bs;
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              type_ = input.readInt32();
               break;
             }
           }
@@ -235,9 +257,33 @@ public final class Protocol {
       }
     }
 
+    public static final int TYPE_FIELD_NUMBER = 3;
+    private int type_;
+    /**
+     * <code>required int32 type = 3;</code>
+     *
+     * <pre>
+     *请求种类 1 客户端请求 2 rpc
+     * </pre>
+     */
+    public boolean hasType() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 type = 3;</code>
+     *
+     * <pre>
+     *请求种类 1 客户端请求 2 rpc
+     * </pre>
+     */
+    public int getType() {
+      return type_;
+    }
+
     private void initFields() {
       version_ = 1;
       command_ = "heartBeat";
+      type_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -253,6 +299,10 @@ public final class Protocol {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -265,6 +315,9 @@ public final class Protocol {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, getCommandBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, type_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -282,6 +335,10 @@ public final class Protocol {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, getCommandBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, type_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -404,6 +461,8 @@ public final class Protocol {
         bitField0_ = (bitField0_ & ~0x00000001);
         command_ = "heartBeat";
         bitField0_ = (bitField0_ & ~0x00000002);
+        type_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -440,6 +499,10 @@ public final class Protocol {
           to_bitField0_ |= 0x00000002;
         }
         result.command_ = command_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.type_ = type_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -464,6 +527,9 @@ public final class Protocol {
           command_ = other.command_;
           onChanged();
         }
+        if (other.hasType()) {
+          setType(other.getType());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -474,6 +540,10 @@ public final class Protocol {
           return false;
         }
         if (!hasCommand()) {
+          
+          return false;
+        }
+        if (!hasType()) {
           
           return false;
         }
@@ -643,6 +713,54 @@ public final class Protocol {
   }
   bitField0_ |= 0x00000002;
         command_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int type_ ;
+      /**
+       * <code>required int32 type = 3;</code>
+       *
+       * <pre>
+       *请求种类 1 客户端请求 2 rpc
+       * </pre>
+       */
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 type = 3;</code>
+       *
+       * <pre>
+       *请求种类 1 客户端请求 2 rpc
+       * </pre>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <code>required int32 type = 3;</code>
+       *
+       * <pre>
+       *请求种类 1 客户端请求 2 rpc
+       * </pre>
+       */
+      public Builder setType(int value) {
+        bitField0_ |= 0x00000004;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 type = 3;</code>
+       *
+       * <pre>
+       *请求种类 1 客户端请求 2 rpc
+       * </pre>
+       */
+      public Builder clearType() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        type_ = 0;
         onChanged();
         return this;
       }
@@ -2778,6 +2896,32 @@ public final class Protocol {
      * </pre>
      */
     int getState();
+
+    /**
+     * <code>optional string responseId = 4;</code>
+     *
+     * <pre>
+     *返回id
+     * </pre>
+     */
+    boolean hasResponseId();
+    /**
+     * <code>optional string responseId = 4;</code>
+     *
+     * <pre>
+     *返回id
+     * </pre>
+     */
+    java.lang.String getResponseId();
+    /**
+     * <code>optional string responseId = 4;</code>
+     *
+     * <pre>
+     *返回id
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getResponseIdBytes();
   }
   /**
    * Protobuf type {@code com.xcm.proto.ResponseHeader}
@@ -2844,6 +2988,12 @@ public final class Protocol {
             case 24: {
               bitField0_ |= 0x00000004;
               state_ = input.readInt32();
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
+              responseId_ = bs;
               break;
             }
           }
@@ -2955,10 +3105,65 @@ public final class Protocol {
       return state_;
     }
 
+    public static final int RESPONSEID_FIELD_NUMBER = 4;
+    private java.lang.Object responseId_;
+    /**
+     * <code>optional string responseId = 4;</code>
+     *
+     * <pre>
+     *返回id
+     * </pre>
+     */
+    public boolean hasResponseId() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional string responseId = 4;</code>
+     *
+     * <pre>
+     *返回id
+     * </pre>
+     */
+    public java.lang.String getResponseId() {
+      java.lang.Object ref = responseId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          responseId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string responseId = 4;</code>
+     *
+     * <pre>
+     *返回id
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getResponseIdBytes() {
+      java.lang.Object ref = responseId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        responseId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       version_ = 1;
       msgType_ = 1;
       state_ = 0;
+      responseId_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2990,6 +3195,9 @@ public final class Protocol {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt32(3, state_);
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getResponseIdBytes());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -3010,6 +3218,10 @@ public final class Protocol {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(3, state_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getResponseIdBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3134,6 +3346,8 @@ public final class Protocol {
         bitField0_ = (bitField0_ & ~0x00000002);
         state_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
+        responseId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -3174,6 +3388,10 @@ public final class Protocol {
           to_bitField0_ |= 0x00000004;
         }
         result.state_ = state_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.responseId_ = responseId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3198,6 +3416,11 @@ public final class Protocol {
         }
         if (other.hasState()) {
           setState(other.getState());
+        }
+        if (other.hasResponseId()) {
+          bitField0_ |= 0x00000008;
+          responseId_ = other.responseId_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -3374,6 +3597,106 @@ public final class Protocol {
       public Builder clearState() {
         bitField0_ = (bitField0_ & ~0x00000004);
         state_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object responseId_ = "";
+      /**
+       * <code>optional string responseId = 4;</code>
+       *
+       * <pre>
+       *返回id
+       * </pre>
+       */
+      public boolean hasResponseId() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string responseId = 4;</code>
+       *
+       * <pre>
+       *返回id
+       * </pre>
+       */
+      public java.lang.String getResponseId() {
+        java.lang.Object ref = responseId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            responseId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string responseId = 4;</code>
+       *
+       * <pre>
+       *返回id
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getResponseIdBytes() {
+        java.lang.Object ref = responseId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          responseId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string responseId = 4;</code>
+       *
+       * <pre>
+       *返回id
+       * </pre>
+       */
+      public Builder setResponseId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        responseId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string responseId = 4;</code>
+       *
+       * <pre>
+       *返回id
+       * </pre>
+       */
+      public Builder clearResponseId() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        responseId_ = getDefaultInstance().getResponseId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string responseId = 4;</code>
+       *
+       * <pre>
+       *返回id
+       * </pre>
+       */
+      public Builder setResponseIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        responseId_ = value;
         onChanged();
         return this;
       }
@@ -4041,17 +4364,18 @@ public final class Protocol {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016protocol.proto\022\rcom.xcm.proto\"?\n\rReque" +
+      "\n\016protocol.proto\022\rcom.xcm.proto\"M\n\rReque" +
       "stHeader\022\022\n\007version\030\001 \002(\005:\0011\022\032\n\007command\030" +
-      "\002 \002(\t:\theartBeat\"2\n\013RequestBody\022#\n\005param" +
-      "\030\001 \003(\0132\024.com.xcm.proto.Param\"#\n\005Param\022\013\n" +
-      "\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"a\n\007Request\022,\n\006" +
-      "header\030\001 \002(\0132\034.com.xcm.proto.RequestHead" +
-      "er\022(\n\004body\030\002 \002(\0132\032.com.xcm.proto.Request" +
-      "Body\"G\n\016ResponseHeader\022\022\n\007version\030\001 \002(\005:" +
-      "\0011\022\022\n\007msgType\030\002 \002(\005:\0011\022\r\n\005state\030\003 \001(\005\"G\n" +
-      "\010Response\022-\n\006header\030\001 \002(\0132\035.com.xcm.prot",
-      "o.ResponseHeader\022\014\n\004body\030\002 \002(\014"
+      "\002 \002(\t:\theartBeat\022\014\n\004type\030\003 \002(\005\"2\n\013Reques" +
+      "tBody\022#\n\005param\030\001 \003(\0132\024.com.xcm.proto.Par" +
+      "am\"#\n\005Param\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"" +
+      "a\n\007Request\022,\n\006header\030\001 \002(\0132\034.com.xcm.pro" +
+      "to.RequestHeader\022(\n\004body\030\002 \002(\0132\032.com.xcm" +
+      ".proto.RequestBody\"[\n\016ResponseHeader\022\022\n\007" +
+      "version\030\001 \002(\005:\0011\022\022\n\007msgType\030\002 \002(\005:\0011\022\r\n\005" +
+      "state\030\003 \001(\005\022\022\n\nresponseId\030\004 \001(\t\"G\n\010Respo",
+      "nse\022-\n\006header\030\001 \002(\0132\035.com.xcm.proto.Resp" +
+      "onseHeader\022\014\n\004body\030\002 \002(\014"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4070,7 +4394,7 @@ public final class Protocol {
     internal_static_com_xcm_proto_RequestHeader_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_RequestHeader_descriptor,
-        new java.lang.String[] { "Version", "Command", });
+        new java.lang.String[] { "Version", "Command", "Type", });
     internal_static_com_xcm_proto_RequestBody_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_xcm_proto_RequestBody_fieldAccessorTable = new
@@ -4094,7 +4418,7 @@ public final class Protocol {
     internal_static_com_xcm_proto_ResponseHeader_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_ResponseHeader_descriptor,
-        new java.lang.String[] { "Version", "MsgType", "State", });
+        new java.lang.String[] { "Version", "MsgType", "State", "ResponseId", });
     internal_static_com_xcm_proto_Response_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_com_xcm_proto_Response_fieldAccessorTable = new

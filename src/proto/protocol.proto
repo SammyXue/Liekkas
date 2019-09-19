@@ -3,6 +3,8 @@ package com.xcm.proto;
 message RequestHeader {
     required int32 version = 1 [default = 1]; //版本号
     required string command = 2 [default = "heartBeat"]; //command
+    required int32 type = 3 ; //请求种类 1 客户端请求 2 rpc
+
 }
 
 message RequestBody {
@@ -24,6 +26,8 @@ message ResponseHeader {
     required int32 version = 1 [default = 1]; //版本号
     required int32 msgType = 2 [default = 1]; //msg type 1接口返回 2 推送
     optional int32 state = 3;// 当接口返回时 有这个字段 1 success 2 fail
+    optional string responseId = 4; //返回id
+
 
 }
 
