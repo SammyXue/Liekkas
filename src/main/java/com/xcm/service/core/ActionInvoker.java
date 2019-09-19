@@ -21,25 +21,25 @@ public class ActionInvoker {
         this.object = object;
     }
 
-    public Object invoke(Protocol.Request request)  {
-        try{
+    public Object invoke(Protocol.Request request) {
+        try {
             return method.invoke(object, getParams(request));
 
-        }catch (Exception e){
+        } catch (Exception e) {
 //            Log.err
             e.printStackTrace();
             return genErrorResponse(e);
         }
     }
 
-    public Protocol.Response genErrorResponse(Exception e){
+    public Protocol.Response genErrorResponse(Exception e) {
         Protocol.ResponseHeader header = Protocol.ResponseHeader.newBuilder().setVersion(1)
                 .setMsgType(MsgType.ECHO.getValue())
                 .setState(State.FAIL.getValue())
                 .build();
         String errMsg = "Error Occurred in Server";
-        if (e instanceof InvocationTargetException){
-            if (((InvocationTargetException) e).getTargetException() instanceof StandardSystemException){
+        if (e instanceof InvocationTargetException) {
+            if (((InvocationTargetException) e).getTargetException() instanceof StandardSystemException) {
                 errMsg = ((StandardSystemException) ((InvocationTargetException) e).getTargetException()).getErrorMsg();
             }
         }
@@ -51,10 +51,10 @@ public class ActionInvoker {
         return response;
     }
 
-    public Object[] getParams(Protocol.Request request){
-        Map<String,String> paramKeyValue= new HashMap<>();
+    public Object[] getParams(Protocol.Request request) {
+        Map<String, String> paramKeyValue = new HashMap<>();
         for (Protocol.Param param : request.getBody().getParamList()) {
-            paramKeyValue.put(param.getKey(),param.getValue());
+            paramKeyValue.put(param.getKey(), param.getValue());
         }
 
         Object[] params = new Object[method.getParameterCount()];
@@ -62,11 +62,12 @@ public class ActionInvoker {
             Parameter parameter = method.getParameters()[i];
 
             Param param = parameter.getAnnotation(Param.class);
-            if (param==null){
-                if (parameter.getType() ==StandardRequest.class){
+            if (param == null) {
+                if (parameter.getType() == StandardRequest.class) {
                     params[i] = new StandardRequest(request);
+                } else {
+                    throw new RuntimeException("lack of  @param on parameter ,method :"+method.getDeclaringClass().getName()+"."+method.getName());
                 }
-                continue;
             }
 
 
