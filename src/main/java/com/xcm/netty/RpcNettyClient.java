@@ -5,6 +5,7 @@ import com.xcm.message.MessageCreater;
 import com.xcm.message.RpcRequest;
 import com.xcm.proto.Protocol;
 import com.xcm.rpc.RpcCallback;
+import com.xcm.rpc.RpcFuture;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -14,6 +15,8 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
+
+import java.util.concurrent.Future;
 
 public class RpcNettyClient {
     private static final int MAX_FRAME_LENGTH = 10240;
@@ -55,20 +58,23 @@ public class RpcNettyClient {
         });
     }
 
-    public void send(RpcRequest request, RpcCallback callback) {
+    public RpcFuture send(RpcRequest request, RpcCallback... callbacks) {
+        RpcFuture rpcFuture = new RpcFuture();
 
         Channel channel = null;
         try {
             channel = bootstrap.connect(host, port).sync().channel();
-            RpcClientHandler.map.put(request.getRequestId(),callback);
+            for (RpcCallback callback : callbacks) {
+                rpcFuture.addCallback(callback);
+            }
+            RpcClientHandler.map.put(request.getRequestId(),rpcFuture);
             channel.writeAndFlush(request.getProtocolRequest());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
 
-
-
+        return rpcFuture;
     }
 
     public void shutdown() {

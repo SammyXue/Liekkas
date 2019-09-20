@@ -6,6 +6,7 @@ import com.xcm.message.RpcRequest;
 import com.xcm.netty.RpcNettyClient;
 import com.xcm.proto.Protocol;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class RpcProxy {
@@ -16,28 +17,44 @@ public class RpcProxy {
         this.rpcNettyClient = rpcNettyClient;
     }
 
-    private Future send(Command command, Object... args) {
-
-        return null;
-    }
-
-    private void send(Command command, RpcCallback callback, Object... args) {
+    private RpcFuture send(Command command, Object... args) {
         Protocol.Request request = MessageCreater.generateRPCRequest(command, args);
-        rpcNettyClient.send(new RpcRequest(request), callback);
+        return rpcNettyClient.send(new RpcRequest(request));
     }
 
-    public static void main(String[] args) {
-         new RpcProxy(new RpcNettyClient("127.0.0.1", 5656)).send(Command.Login, new RpcCallback() {
-             @Override
-             public void onFail(Protocol.Response response) {
-                 System.out.println("onFail");
-             }
+    private RpcFuture send(Command command, RpcCallback callback, Object... args) {
+        Protocol.Request request = MessageCreater.generateRPCRequest(command, args);
+        return rpcNettyClient.send(new RpcRequest(request), callback);
+    }
 
-             @Override
-             public void onSuccess(Protocol.Response response) {
-                 System.out.println("onSuccess");
-             }
-         });
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        RpcProxy proxy = new RpcProxy(new RpcNettyClient("127.0.0.1", 5656));
+        RpcFuture rpcFuture = proxy.send(Command.Login, new RpcCallback() {
+            @Override
+            public void onFail(Protocol.Response response) {
+                System.out.println("onFail");
+            }
+
+            @Override
+            public void onSuccess(Protocol.Response response) {
+                System.out.println("onSuccess");
+            }
+        });
+        rpcFuture.get();
+        rpcFuture.addCallback(new RpcCallback() {
+            @Override
+            public void onFail(Protocol.Response response) {
+                System.out.println("onFai213123l");
+
+            }
+
+            @Override
+            public void onSuccess(Protocol.Response response) {
+
+            }
+        });
+        System.out.println("after1");
+
 
     }
 //    if(isAsync)
