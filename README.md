@@ -72,10 +72,10 @@ public class HelloWorldAction extends BaseAction {
 ```
 
 ##2. rpc调用的写法
-我提供了同步和异步两种方式以适应各种逻辑。
+我提供了同步和异步两种方式以适应各种业务逻辑。
 * 同步rpc
 
-首先创建一个RpcProxy对象,调用send函数即可发送请求给服务器，send会返回一个RpcFuture对象调用RpcFuture.get()会阻塞并返回一个response。
+首先创建一个`RpcProxy`对象,调用`send`函数即可发送请求给服务器，`send`会返回一个`RpcFuture`对象调用`RpcFuture.get()`会**阻塞**并返回一个`response`。
 ```java
     RpcProxy proxy = new RpcProxy(new RpcNettyClient("127.0.0.1", 5656));
     RpcFuture rpcFuture = proxy.send(Command.Login,arg1,arg2);
@@ -84,7 +84,7 @@ public class HelloWorldAction extends BaseAction {
 
 * 异步rpc
 
-在写异步调用是，你可以新建一个Callback对象最为第二个参数传入send函数，他会在收到请求返回时根据返回结果选择调用onSuccess还是onFail。
+在写异步调用时，你需要新建一个`Callback`对象最为第二个参数传入`send`函数，他会在收到请求返回时根据**返回结果**选择调用`onSuccess`还是`onFail`。
 
 ```java
     RpcFuture rpcFuture = proxy.send(Command.Login,new RpcCallback() {
@@ -99,17 +99,9 @@ public class HelloWorldAction extends BaseAction {
         }
     },arg1,arg2);
 ```
-如果需要有多个callback，也支持了在后续addCallback
+当然如果需要有**多个**`callback`，也支持了在后续`addCallback`
 ```java
     rpcFuture.addCallback(new RpcCallback() {
-        @Override
-        public void onFail(Protocol.Response response) {
-            ...
-        }
-
-        @Override
-        public void onSuccess(Protocol.Response response) {
-            ...
-        }
+        ...
     });
 ```
