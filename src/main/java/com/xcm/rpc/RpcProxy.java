@@ -29,31 +29,22 @@ public class RpcProxy {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         RpcProxy proxy = new RpcProxy(new RpcNettyClient("127.0.0.1", 5656));
-        RpcFuture rpcFuture = proxy.send(Command.Login, new RpcCallback() {
-            @Override
-            public void onFail(Protocol.Response response) {
-                System.out.println("onFail");
-            }
+        for (int i = 0; i < 1000; i++) {
+            RpcFuture rpcFuture = proxy.send(Command.Login );
+            int finalI = i;
+            rpcFuture.addCallback(new RpcCallback() {
+                @Override
+                public void onFail(Protocol.Response response) {
+                    System.out.println("onFail"+ finalI);
+                }
 
-            @Override
-            public void onSuccess(Protocol.Response response) {
-                System.out.println("onSuccess");
-            }
-        });
-        rpcFuture.get();
-        rpcFuture.addCallback(new RpcCallback() {
-            @Override
-            public void onFail(Protocol.Response response) {
-                System.out.println("onFai213123l");
+                @Override
+                public void onSuccess(Protocol.Response response) {
 
-            }
+                }
+            });
+        }
 
-            @Override
-            public void onSuccess(Protocol.Response response) {
-
-            }
-        });
-        System.out.println("after1");
 
 
     }

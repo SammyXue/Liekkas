@@ -5,12 +5,15 @@ import com.xcm.proto.Protocol;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class RpcFuture implements Future<Protocol.Response> {
-    CountDownLatch latch = new CountDownLatch(1);
-    Protocol.Response response;
+    private CountDownLatch latch = new CountDownLatch(1);
+    private Protocol.Response response;
 
-    List<RpcCallback> callbackList = new ArrayList<>();
+    private List<RpcCallback> callbackList = new ArrayList<>();
+    private Lock lock = new ReentrantLock();
 
     @Override
     public boolean cancel(boolean mayInterruptIfRunning) {
@@ -42,11 +45,20 @@ public class RpcFuture implements Future<Protocol.Response> {
     public void done(Protocol.Response response) {
         this.response = response;
         latch.countDown();
-        for (RpcCallback rpcCallback : callbackList) {
-            doCallback(rpcCallback);
 
+
+    }
+
+    public void doAllCallback() {
+        lock.lock();
+        try {
+            for (RpcCallback rpcCallback : callbackList) {
+                doCallback(rpcCallback);
+
+            }
+        } finally {
+            lock.unlock();
         }
-
     }
 
     public void doCallback(RpcCallback rpcCallback) {
@@ -59,10 +71,18 @@ public class RpcFuture implements Future<Protocol.Response> {
     }
 
     public void addCallback(RpcCallback rpcCallback) {
-        if (isDone()) {
-            doCallback(rpcCallback);
-        } else {
-            callbackList.add(rpcCallback);
+        lock.lock();
+        try {
+            if (isDone()) {
+                doCallback(rpcCallback);
+            } else {
+                callbackList.add(rpcCallback);
+            }
+        } finally {
+            lock.lock();
+
         }
+
+
     }
 }
