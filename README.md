@@ -1,6 +1,6 @@
 # Liekkas
 一个基于netty的网络框架，非常轻量和简单。
-## 1. 处理请求的写法
+## 1. 处理请求
 ```java
 @Component
 public class HelloWorldAction extends BaseAction {
@@ -71,7 +71,8 @@ public class HelloWorldAction extends BaseAction {
 
 ```
 
-##2. rpc调用的写法
+##2. rpc调用
+
 我提供了同步和异步两种方式以适应各种业务逻辑。
 * 同步rpc
 
