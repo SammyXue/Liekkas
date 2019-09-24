@@ -71,7 +71,7 @@ public class HelloWorldAction extends BaseAction {
 
 ```
 
-##2. rpc调用
+## 2. rpc调用
 
 我提供了同步和异步两种方式以适应各种业务逻辑。
 * 同步rpc
