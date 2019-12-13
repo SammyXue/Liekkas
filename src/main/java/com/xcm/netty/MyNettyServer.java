@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MyNettyServer {
-    private static final String IP = "localhost";
+    private static final String IP = "0.0.0.0";
     private static final int PORT = 5656;
     private static final int BIZGROUPSIZE = Runtime.getRuntime()
             .availableProcessors() * 2;
