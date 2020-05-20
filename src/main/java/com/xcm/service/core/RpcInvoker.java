@@ -40,21 +40,21 @@ public class RpcInvoker extends ActionInvoker {
     }
 
 
-    @Override
-    public Object[] getParams(StandardRequest request) {
-        RpcRequest rpcRequest = (RpcRequest) request;
-        Object[] params = new Object[method.getParameterCount()];
-        //TODO：
-        for (int i = 0; i < method.getParameters().length; i++) {
-            Parameter parameter = method.getParameters()[i];
-
-            Param param = parameter.getAnnotation(Param.class);
-            if (parameter.getType() == StandardRequest.class) {
-                params[i] = rpcRequest;
-                continue;
-            }
-
-        }
-        return params;
-    }
+//    @Override
+//    public Object[] getParams(StandardRequest request) {
+//        RpcRequest rpcRequest = (RpcRequest) request;
+//        Object[] params = new Object[method.getParameterCount()];
+//        //TODO：
+//        for (int i = 0; i < method.getParameters().length; i++) {
+//            Parameter parameter = method.getParameters()[i];
+//
+//            Param param = parameter.getAnnotation(Param.class);
+//            if (parameter.getType() == StandardRequest.class) {
+//                params[i] = rpcRequest;
+//                continue;
+//            }
+//
+//        }
+//        return params;
+//    }
 }

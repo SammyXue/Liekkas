@@ -15,24 +15,20 @@ public class MessageHandler {
 
     protected static Map<Command, ActionInvoker> commandHandleMap = new HashMap<>();
 
-    static ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     public static void handleRequest(ChannelHandlerContext ctx, StandardRequest request) {
-        executorService.execute(() -> {
-            try {
-                Command command = Command.getCommandByName(request.getProtocolRequest().getHeader().getCommand());
-                ActionInvoker invoker = commandHandleMap.get(command);
-                if (invoker == null) {
-//                    log
-                    return;
-                }
-
-
-                ctx.writeAndFlush(invoker.invoke(request));
-
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            Command command = Command.getCommandByName(request.getProtocolRequest().getHeader().getCommand());
+            ActionInvoker invoker = commandHandleMap.get(command);
+            if (invoker == null) {
+                return;
             }
-        });
+
+
+            ctx.writeAndFlush(invoker.invoke(request));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

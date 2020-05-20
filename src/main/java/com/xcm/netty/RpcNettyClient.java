@@ -24,15 +24,21 @@ public class RpcNettyClient {
     String host;
     int port;
     Bootstrap bootstrap;
+    Channel channel ;
+
 
 
     public RpcNettyClient(String host, int port) {
         this.host = host;
         this.port = port;
-        init();
+        try {
+            init();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void init() {
+    public void init() throws InterruptedException {
         bootstrap = new Bootstrap();
 
         EventLoopGroup group = new NioEventLoopGroup();
@@ -56,22 +62,18 @@ public class RpcNettyClient {
 
             }
         });
+        channel = bootstrap.connect(host, port).sync().channel();
+
     }
 
     public RpcFuture send(RpcRequest request, RpcCallback... callbacks) {
         RpcFuture rpcFuture = new RpcFuture();
 
-        Channel channel = null;
-        try {
-            channel = bootstrap.connect(host, port).sync().channel();
-            for (RpcCallback callback : callbacks) {
-                rpcFuture.addCallback(callback);
-            }
-            RpcClientHandler.map.put(request.getRequestId(),rpcFuture);
-            channel.writeAndFlush(request.getProtocolRequest());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        for (RpcCallback callback : callbacks) {
+            rpcFuture.addCallback(callback);
         }
+        RpcClientHandler.map.put(request.getRequestId(),rpcFuture);
+        channel.writeAndFlush(request.getProtocolRequest());
 
 
         return rpcFuture;

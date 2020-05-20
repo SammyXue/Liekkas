@@ -29,7 +29,7 @@ public class RpcProxy {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         RpcProxy proxy = new RpcProxy(new RpcNettyClient("127.0.0.1", 5656));
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             RpcFuture rpcFuture = proxy.send(Command.Login );
             int finalI = i;
             rpcFuture.addCallback(new RpcCallback() {
