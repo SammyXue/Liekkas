@@ -1,4 +1,6 @@
 # Liekkas
+[![Build Status](https://travis-ci.com/jessonx/Liekkas.svg?branch=master)](https://travis-ci.com/jessonx/Liekkas)
+
 一个基于netty的轻量网络框架。
 ## 1. 处理请求
 ```java
