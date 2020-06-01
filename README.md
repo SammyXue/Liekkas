@@ -1,5 +1,5 @@
 # Liekkas
-一个基于netty的网络框架，非常轻量和简单。
+一个基于netty的轻量网络框架。
 ## 1. 处理请求
 ```java
 @Component
