@@ -24,7 +24,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.xcm.Main</mainClass> <!-- 指定入口类 -->
+                            <mainClass>com.liekkas.Main</mainClass> <!-- 指定入口类 -->
                             <addClasspath>true</addClasspath> <!-- 在jar的MF文件中生成classpath属性 -->
                             <classpathPrefix>lib/</classpathPrefix> <!-- classpath前缀,即依赖jar包的路径 -->
                         </manifest>
@@ -62,6 +62,11 @@
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
             <version>3.4.14</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
     </dependencies>
 
