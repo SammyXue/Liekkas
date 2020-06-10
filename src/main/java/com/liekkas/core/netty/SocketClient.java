@@ -3,7 +3,7 @@ package com.liekkas.core.netty;
 
 import com.liekkas.core.message.Command;
 import com.liekkas.core.message.MessageCreater;
-import com.liekkas.core.proto.Protocol;
+import com.liekkas.core.message.proto.Protocol;
 
 import java.io.IOException;
 import java.net.Socket;

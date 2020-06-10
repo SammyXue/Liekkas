@@ -1,4 +1,4 @@
-package com.liekkas.core;
+package com.liekkas.core.constants;
 
 public enum MessageType {
     REQUEST(1), RPC(2);

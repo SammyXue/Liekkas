@@ -1,6 +1,6 @@
-package com.liekkas.core;
+package com.liekkas.core.init;
 
-import com.liekkas.core.init.NetInitManager;
+import com.liekkas.core.BeanGetter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CoreService implements ApplicationContextAware, InitializingBean {
-    private static Logger logger = Logger.getLogger(NetInitManager.class);
+public class InitServiceManager implements ApplicationContextAware, InitializingBean {
+    private static Logger logger = Logger.getLogger(NetInitService.class);
 
     private ApplicationContext applicationContext;
 
@@ -26,21 +26,21 @@ public class CoreService implements ApplicationContextAware, InitializingBean {
     public void afterPropertiesSet() {
         BeanGetter.setApplicationContext(applicationContext);
         String[] allBeanNames = applicationContext.getBeanDefinitionNames();
-        List<InitManager> list = new ArrayList<>();
+        List<InitService> list = new ArrayList<>();
         for (String beanName : allBeanNames) {
             Object bean = applicationContext.getBean(beanName);
 
-            if (bean instanceof InitManager) {
-                list.add(((InitManager) bean));
+            if (bean instanceof InitService) {
+                list.add(((InitService) bean));
 
             }
         }
         list.sort((e1, e2) -> e2.priority() - e1.priority());
-        for (InitManager initManager : list) {
-            String name = initManager.getClass().getName();
+        for (InitService initService : list) {
+            String name = initService.getClass().getName();
             try {
                 logger.info(name + " init start");
-                initManager.init();
+                initService.init();
                 logger.info(name + " init finish");
 
             } catch (Exception e) {

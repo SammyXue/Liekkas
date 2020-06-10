@@ -1,7 +1,6 @@
 package com.liekkas.core.init;
 
 import com.liekkas.core.config.NettyServerConfigImpl;
-import com.liekkas.core.InitManager;
 import com.liekkas.core.netty.NettyServer;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +8,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 @Component
-public class NetInitManager implements InitManager {
+public class NetInitService implements InitService {
 
     @Override
     public void init() throws Exception {

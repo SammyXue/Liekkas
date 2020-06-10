@@ -1,8 +1,8 @@
 package com.liekkas.core.message;
 
-import com.liekkas.core.proto.Protocol;
+import com.liekkas.core.message.proto.Protocol;
 import com.liekkas.core.session.Session;
-import com.liekkas.core.session.SessionManager;
+import com.liekkas.core.session.SessionService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class StandardRequest {
             params.put(param.getKey(), param.getValue());
         }
         if (params.containsKey(SESSION_KEY)) {
-            session = SessionManager.getInstance().getBySessionId(params.get(SESSION_KEY),false);
+            session = SessionService.getInstance().getBySessionId(params.get(SESSION_KEY),false);
         }
     }
 

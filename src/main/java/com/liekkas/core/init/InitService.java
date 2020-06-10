@@ -1,10 +1,10 @@
-package com.liekkas.core;
+package com.liekkas.core.init;
 
 
 /**
  * 启动时需要初始化
  */
-public interface InitManager {
+public interface InitService {
 
     void init() throws Exception;
 

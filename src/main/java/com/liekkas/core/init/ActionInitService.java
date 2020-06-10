@@ -2,10 +2,9 @@ package com.liekkas.core.init;
 
 import com.liekkas.core.action.BaseAction;
 import com.liekkas.core.message.Path;
-import com.liekkas.core.ActionInvoker;
-import com.liekkas.core.InitManager;
-import com.liekkas.core.MessageDispatcher;
-import com.liekkas.core.RpcInvoker;
+import com.liekkas.core.invoker.ActionInvoker;
+import com.liekkas.core.message.MessageDispatcher;
+import com.liekkas.core.invoker.RpcInvoker;
 
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 
 @Component
-public class ActionInitManager extends ApplicationObjectSupport implements InitManager {
+public class ActionInitService extends ApplicationObjectSupport implements InitService {
 
     @Override
     public void init() {

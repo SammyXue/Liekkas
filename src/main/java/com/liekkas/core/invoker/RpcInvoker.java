@@ -1,7 +1,7 @@
-package com.liekkas.core;
+package com.liekkas.core.invoker;
 
 import com.liekkas.core.message.*;
-import com.liekkas.core.proto.Protocol;
+import com.liekkas.core.message.proto.Protocol;
 
 import java.lang.reflect.Method;
 

@@ -1,4 +1,4 @@
-package com.liekkas.core.message;
+package com.liekkas.core.message.param;
 
 public class StringParamTransfer implements ParamTransfer<String> {
     @Override

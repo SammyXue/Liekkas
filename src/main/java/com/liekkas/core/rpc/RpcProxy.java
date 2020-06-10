@@ -4,9 +4,7 @@ import com.liekkas.core.message.Command;
 import com.liekkas.core.message.MessageCreater;
 import com.liekkas.core.message.RpcRequest;
 import com.liekkas.core.netty.RpcNettyClient;
-import com.liekkas.core.proto.Protocol;
-
-import java.util.concurrent.ExecutionException;
+import com.liekkas.core.message.proto.Protocol;
 
 public class RpcProxy {
 

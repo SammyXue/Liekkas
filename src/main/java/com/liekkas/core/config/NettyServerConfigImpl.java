@@ -1,7 +1,7 @@
 package com.liekkas.core.config;
 
 import com.liekkas.Main;
-import com.liekkas.core.ServerType;
+import com.liekkas.core.constants.ServerType;
 import org.apache.log4j.Logger;
 
 import java.util.Properties;

@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Session {
-    private SessionManager manager;
+    private SessionService manager;
     private String sessionId;
     private long nextExpireTime;
     private long expireTime;
@@ -16,7 +16,7 @@ public class Session {
      */
     protected Map<String, Object> attributes = new ConcurrentHashMap<>();
 
-    public Session(String sessionId,SessionManager manager) {
+    public Session(String sessionId, SessionService manager) {
         this.manager =manager;
         this.sessionId = sessionId;
         this.expireTime = DEFAULT_EXPIRETIME;

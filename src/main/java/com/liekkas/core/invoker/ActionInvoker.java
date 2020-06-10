@@ -1,9 +1,12 @@
-package com.liekkas.core;
+package com.liekkas.core.invoker;
 
 import com.google.protobuf.ByteString;
 import com.liekkas.core.exception.StandardSystemException;
 import com.liekkas.core.message.*;
-import com.liekkas.core.proto.Protocol;
+import com.liekkas.core.message.param.Param;
+import com.liekkas.core.message.param.ParamTransfer;
+import com.liekkas.core.message.param.ParamTransferFactory;
+import com.liekkas.core.message.proto.Protocol;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;

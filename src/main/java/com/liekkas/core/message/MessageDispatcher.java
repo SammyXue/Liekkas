@@ -1,7 +1,6 @@
-package com.liekkas.core;
+package com.liekkas.core.message;
 
-import com.liekkas.core.message.Command;
-import com.liekkas.core.message.StandardRequest;
+import com.liekkas.core.invoker.ActionInvoker;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.log4j.Logger;
 

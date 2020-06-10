@@ -1,6 +1,6 @@
 package com.liekkas.core.rpc;
 
-import com.liekkas.core.proto.Protocol;
+import com.liekkas.core.message.proto.Protocol;
 
 import java.util.ArrayList;
 import java.util.List;

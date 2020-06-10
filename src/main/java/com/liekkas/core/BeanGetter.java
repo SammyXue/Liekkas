@@ -1,5 +1,6 @@
 package com.liekkas.core;
 
+import com.liekkas.core.invoker.ActionInvoker;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

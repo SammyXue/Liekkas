@@ -1,7 +1,7 @@
 package com.liekkas.core.session;
 
 import com.liekkas.core.BeanGetter;
-import com.liekkas.core.InitManager;
+import com.liekkas.core.init.InitService;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -10,12 +10,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.liekkas.core.init.InitConstants.SESSION_MANAGER_NAME;
 
 @Component(SESSION_MANAGER_NAME)
-public class SessionManager implements InitManager {
+public class SessionService implements InitService {
 
     Map<String, Session> sessions = new ConcurrentHashMap<>();
 
-    public static SessionManager getInstance() {
-        return (SessionManager) BeanGetter.getBean(SESSION_MANAGER_NAME);
+    public static SessionService getInstance() {
+        return (SessionService) BeanGetter.getBean(SESSION_MANAGER_NAME);
     }
 
     public Session getBySessionId(String sessionId, boolean createNew) {

@@ -5,7 +5,7 @@ import com.liekkas.core.message.MsgType;
 import com.liekkas.core.message.RpcRequest;
 import com.liekkas.core.message.StandardRequest;
 import com.liekkas.core.message.State;
-import com.liekkas.core.proto.Protocol;
+import com.liekkas.core.message.proto.Protocol;
 
 public class BaseAction {
     public static final int VERSION = 1;

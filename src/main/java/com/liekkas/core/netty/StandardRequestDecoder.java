@@ -2,8 +2,8 @@ package com.liekkas.core.netty;
 
 import com.liekkas.core.message.RpcRequest;
 import com.liekkas.core.message.StandardRequest;
-import com.liekkas.core.proto.Protocol;
-import com.liekkas.core.MessageType;
+import com.liekkas.core.message.proto.Protocol;
+import com.liekkas.core.constants.MessageType;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 

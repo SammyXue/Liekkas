@@ -1,7 +1,7 @@
 package com.liekkas.core.netty;
 
 import com.liekkas.core.config.NettyServerConfig;
-import com.liekkas.core.proto.Protocol;
+import com.liekkas.core.message.proto.Protocol;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

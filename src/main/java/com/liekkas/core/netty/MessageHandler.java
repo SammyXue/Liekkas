@@ -2,7 +2,7 @@ package com.liekkas.core.netty;
 
 
 import com.liekkas.core.message.StandardRequest;
-import com.liekkas.core.MessageDispatcher;
+import com.liekkas.core.message.MessageDispatcher;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

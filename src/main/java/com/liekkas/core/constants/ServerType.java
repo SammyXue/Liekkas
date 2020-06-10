@@ -1,4 +1,4 @@
-package com.liekkas.core;
+package com.liekkas.core.constants;
 
 /**
  * 游戏服务器的种类，目前有三类，可向后拓展

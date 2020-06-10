@@ -1,6 +1,6 @@
 package com.liekkas.core.netty;
 
-import com.liekkas.core.proto.Protocol;
+import com.liekkas.core.message.proto.Protocol;
 import com.liekkas.core.rpc.RpcFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
