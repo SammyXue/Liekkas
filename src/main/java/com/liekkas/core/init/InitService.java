@@ -1,8 +1,11 @@
 package com.liekkas.core.init;
 
 
+import org.apache.log4j.Logger;
+
 /**
- * 启动时需要初始化
+ * 启动时需要初始化的类
+ *
  */
 public interface InitService {
 

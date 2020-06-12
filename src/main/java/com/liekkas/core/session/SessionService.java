@@ -12,7 +12,7 @@ import static com.liekkas.core.init.InitConstants.SESSION_MANAGER_NAME;
 @Component(SESSION_MANAGER_NAME)
 public class SessionService implements InitService {
 
-    Map<String, Session> sessions = new ConcurrentHashMap<>();
+    private Map<String, Session> sessions = new ConcurrentHashMap<>();
 
     public static SessionService getInstance() {
         return (SessionService) BeanGetter.getBean(SESSION_MANAGER_NAME);
@@ -59,6 +59,7 @@ public class SessionService implements InitService {
         sessionClearThread.start();
     }
 
+    //todo:改成惰性淘汰
     class SessionRunnable implements Runnable {
 
         @Override

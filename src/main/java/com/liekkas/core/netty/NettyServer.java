@@ -42,7 +42,7 @@ public class NettyServer {
      */
     private void init() throws Exception {
 
-        logger.info("开始启动服务器...");
+        logger.info("netty server init start");
 
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(bossGroup, workerGroup);
@@ -70,7 +70,7 @@ public class NettyServer {
         bootstrap.option(ChannelOption.SO_BACKLOG, 128);
         bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
         bootstrap.bind(config.getIp(), config.getPort()).sync();
-        logger.info("服务器已启动");
+        logger.info("netty server init finished");
         logger.info("Binding port: " + config.getPort());
     }
 
@@ -80,9 +80,11 @@ public class NettyServer {
      */
     private void addShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("开始关闭netty服务器...");
+            logger.info("netty server shuntdown start");
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
+            logger.info("netty server shuntdown finish");
+
         }));
 
     }

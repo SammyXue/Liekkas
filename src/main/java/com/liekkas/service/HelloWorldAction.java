@@ -1,7 +1,7 @@
 package com.liekkas.service;
 
 import com.liekkas.core.action.BaseAction;
-import com.liekkas.core.exception.StandardSystemException;
+import com.liekkas.core.exception.ServiceException;
 import com.liekkas.core.message.*;
 import com.liekkas.core.message.param.Param;
 import com.liekkas.core.message.proto.Protocol;
@@ -24,7 +24,7 @@ public class HelloWorldAction extends BaseAction {
 
     @Path(Command.TestStandardException)
     public Protocol.Response testStandardException() {
-        throw new StandardSystemException("test ");
+        throw new ServiceException("test ");
     }
 
 

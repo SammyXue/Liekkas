@@ -24,8 +24,10 @@ public class ZkTest {
         ZooKeeper zooKeeper = new ZooKeeper(ADDRESS, 5000, new MyWatcher());
         System.out.println("state:" + zooKeeper.getState());
         countDownLatch.await();
+         zooKeeper.create("/liekkas", "liekkas for java!".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        zooKeeper.create("/liekkas/servers", "Server cluster".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 
-         zooKeeper.setData("/xuecm/test3", "1".getBytes(),-1);
+//         zooKeeper.setData("/xuecm/test3", "1".getBytes(),-1);
 
         System.out.println("state:" + zooKeeper.getState());
 

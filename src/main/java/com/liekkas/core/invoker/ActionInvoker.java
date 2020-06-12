@@ -1,7 +1,7 @@
 package com.liekkas.core.invoker;
 
 import com.google.protobuf.ByteString;
-import com.liekkas.core.exception.StandardSystemException;
+import com.liekkas.core.exception.ServiceException;
 import com.liekkas.core.message.*;
 import com.liekkas.core.message.param.Param;
 import com.liekkas.core.message.param.ParamTransfer;
@@ -41,8 +41,8 @@ public class ActionInvoker {
                 .build();
         String errMsg = "Error Occurred in Server";
         if (e instanceof InvocationTargetException) {
-            if (((InvocationTargetException) e).getTargetException() instanceof StandardSystemException) {
-                errMsg = ((StandardSystemException) ((InvocationTargetException) e).getTargetException()).getErrorMsg();
+            if (((InvocationTargetException) e).getTargetException() instanceof ServiceException) {
+                errMsg = ((ServiceException) ((InvocationTargetException) e).getTargetException()).getErrorMsg();
             }
         }
 

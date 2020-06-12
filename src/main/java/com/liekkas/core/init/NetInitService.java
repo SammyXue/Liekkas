@@ -1,22 +1,33 @@
 package com.liekkas.core.init;
 
+import com.liekkas.core.config.NettyServerConfig;
 import com.liekkas.core.config.NettyServerConfigImpl;
 import com.liekkas.core.netty.NettyServer;
+import com.liekkas.core.server.Server;
+import com.liekkas.core.server.ServerManager;
 import org.springframework.stereotype.Component;
 
-import java.io.FileInputStream;
-import java.util.Properties;
 
 @Component
 public class NetInitService implements InitService {
 
     @Override
     public void init() throws Exception {
-        Properties properties = new Properties();
 
-        properties.load((new FileInputStream(InitConstants.RESOURCE_PATH + "server.properties")));
-
-        NettyServer nettyServer = new NettyServer(new NettyServerConfigImpl(properties));
+        NettyServerConfig nettyServerConfig = new NettyServerConfigImpl(InitConstants.severProperties);
+        NettyServer nettyServer = new NettyServer(nettyServerConfig);
         nettyServer.start();
+        Server server = new Server(nettyServerConfig);
+        ServerManager.getInstance().registerSelf(server);
+    }
+
+    /**
+     * 在 zkService前初始化
+     *
+     * @return
+     */
+    @Override
+    public int priority() {
+        return Integer.MAX_VALUE - 1;
     }
 }

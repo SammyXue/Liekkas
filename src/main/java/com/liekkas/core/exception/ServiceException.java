@@ -5,10 +5,10 @@ package com.liekkas.core.exception;
  *
  * @author xuecm
  */
-public class StandardSystemException extends RuntimeException {
+public class ServiceException extends RuntimeException {
     private String errorMsg;
 
-    public StandardSystemException(String errorMsg) {
+    public ServiceException(String errorMsg) {
         this.errorMsg = errorMsg;
     }
 
