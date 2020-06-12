@@ -10,4 +10,6 @@ public interface ServerConfig {
     String getIp();
 
     int getPort();
+
+    int getMaxFrameLength();
 }

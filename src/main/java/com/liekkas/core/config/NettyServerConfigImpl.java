@@ -13,6 +13,7 @@ public class NettyServerConfigImpl implements NettyServerConfig {
     private int serverType;
     private String ip;
     private int port;
+    private int maxFrameLength;
 
     public NettyServerConfigImpl(Properties properties) {
         try {
@@ -20,6 +21,7 @@ public class NettyServerConfigImpl implements NettyServerConfig {
             this.serverType = Integer.parseInt(properties.getProperty("server.type"));
             this.ip = properties.getProperty("server.ip");
             this.port = Integer.parseInt(properties.getProperty("server.port"));
+            this.maxFrameLength = Integer.parseInt(properties.getProperty("server.maxFrameLength"));
         } catch (Exception e) {
             logger.error("error format", e);
         }
@@ -58,5 +60,10 @@ public class NettyServerConfigImpl implements NettyServerConfig {
     @Override
     public int getPort() {
         return port;
+    }
+
+    @Override
+    public int getMaxFrameLength() {
+        return maxFrameLength;
     }
 }

@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 public class NettyServer {
 
     private static Logger logger = Logger.getLogger(NettyServer.class);
-    private static final int MAX_FRAME_LENGTH = 10240;
 
     private final EventLoopGroup bossGroup;
     private final EventLoopGroup workerGroup;
@@ -55,7 +54,7 @@ public class NettyServer {
                 ChannelPipeline pipeline = ch.pipeline();
                 // decoded
                 pipeline.addLast(new LengthFieldBasedFrameDecoder(
-                        MAX_FRAME_LENGTH, 0, 4, 0, 4));
+                        config.getMaxFrameLength(), 0, 4, 0, 4));
                 pipeline.addLast(new ProtobufDecoder(Protocol.Request
                         .getDefaultInstance()));
                 pipeline.addLast(new StandardRequestDecoder());

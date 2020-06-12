@@ -1,11 +1,13 @@
 package com.liekkas.core.netty;
 
+import com.liekkas.core.init.InitConstants;
 import com.liekkas.core.message.Command;
 import com.liekkas.core.message.MessageCreater;
 import com.liekkas.core.message.RpcRequest;
 import com.liekkas.core.message.proto.Protocol;
 import com.liekkas.core.rpc.RpcCallback;
 import com.liekkas.core.rpc.RpcFuture;
+import com.liekkas.core.server.Server;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -15,24 +17,29 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import org.apache.log4j.Logger;
 
 public class RpcNettyClient {
-    private static final int MAX_FRAME_LENGTH = 10240;
+    private static final int MAX_FRAME_LENGTH = Integer.parseInt(InitConstants.severProperties.getProperty("server.maxFrameLength","10240"));
+    private static Logger logger = Logger.getLogger(InitConstants.class);
 
     String host;
     int port;
     Bootstrap bootstrap;
-    Channel channel ;
+    Channel channel;
 
 
+    public RpcNettyClient(Server server) {
+        this(server.getIp(), server.getPort());
+    }
 
-    public RpcNettyClient(String host, int port) {
+    private RpcNettyClient(String host, int port) {
         this.host = host;
         this.port = port;
         try {
             init();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("RpcNettyClient init fail", e);
         }
     }
 
@@ -70,7 +77,7 @@ public class RpcNettyClient {
         for (RpcCallback callback : callbacks) {
             rpcFuture.addCallback(callback);
         }
-        RpcClientHandler.map.put(request.getRequestId(),rpcFuture);
+        RpcClientHandler.map.put(request.getRequestId(), rpcFuture);
         channel.writeAndFlush(request.getProtocolRequest());
 
 
