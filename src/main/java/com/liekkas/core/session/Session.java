@@ -9,7 +9,7 @@ public class Session {
     private long nextExpireTime;
     private long expireTime;
 
-    private static final long DEFAULT_EXPIRETIME = 30*60*1000;
+    private static final long DEFAULT_EXPIRE_TIME = 30 * 60 * 1000;
 
     /**
      * The collection of user data attributes associated with this Session.
@@ -17,10 +17,10 @@ public class Session {
     protected Map<String, Object> attributes = new ConcurrentHashMap<>();
 
     public Session(String sessionId, SessionService manager) {
-        this.manager =manager;
+        this.manager = manager;
         this.sessionId = sessionId;
-        this.expireTime = DEFAULT_EXPIRETIME;
-        this.nextExpireTime = System.currentTimeMillis()+expireTime;
+        this.expireTime = DEFAULT_EXPIRE_TIME;
+        this.nextExpireTime = System.currentTimeMillis() + expireTime;
     }
 
     public String getSessionId() {

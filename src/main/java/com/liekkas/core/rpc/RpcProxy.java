@@ -24,6 +24,10 @@ public class RpcProxy {
         return rpcNettyClient.send(new RpcRequest(request), callback);
     }
 
+    public void disconnect(){
+        rpcNettyClient.shutdown();
+    }
+
 
 //    if(isAsync)
 //

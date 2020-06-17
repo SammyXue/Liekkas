@@ -16,13 +16,27 @@ public class Client {
         server.setPort(5656);
 
         RpcProxy proxy = new RpcProxy(new RpcNettyClient(server));
+        try {
+
         for (int i = 0; i < 100; i++) {
             new Thread(() -> {
                 RpcFuture rpcFuture = proxy.send(Command.Login);
+                try {
+                    rpcFuture.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
             ).start();
         }
+
+        }finally {
+            proxy.disconnect();
+        }
+
 
 
     }

@@ -26,6 +26,7 @@ public class RpcNettyClient {
     String host;
     int port;
     Bootstrap bootstrap;
+    EventLoopGroup group;
     Channel channel;
 
 
@@ -46,7 +47,7 @@ public class RpcNettyClient {
     public void init() throws InterruptedException {
         bootstrap = new Bootstrap();
 
-        EventLoopGroup group = new NioEventLoopGroup();
+        group = new NioEventLoopGroup();
         bootstrap.group(group);
         bootstrap.channel(NioSocketChannel.class).option(
                 ChannelOption.SO_KEEPALIVE, true);
@@ -72,6 +73,9 @@ public class RpcNettyClient {
     }
 
     public RpcFuture send(RpcRequest request, RpcCallback... callbacks) {
+        if (!isConnected()){
+            throw new IllegalStateException("rpc connection is disconnected ");
+        }
         RpcFuture rpcFuture = new RpcFuture();
 
         for (RpcCallback callback : callbacks) {
@@ -84,8 +88,15 @@ public class RpcNettyClient {
         return rpcFuture;
     }
 
+    public boolean isConnected(){
+        return channel.isActive();
+    }
+
     public void shutdown() {
-        bootstrap.group().shutdownGracefully();
+        /**
+         * 在调用shutdownGracefully后 channel继续writeAndFlush居然不会抛出任何异常（当然肯定是发送失败），所以封装了isConnected状态
+         */
+        group.shutdownGracefully();
 
     }
 

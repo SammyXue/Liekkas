@@ -22,11 +22,12 @@ public class MessageDispatcher {
                 return;
             }
 
+            //logger.info("handleRequest \n"+request.getProtocolRequest());
 
             ctx.writeAndFlush(invoker.invoke(request));
 
         } catch (Exception e) {
-            logger.info("handleRequest error",e);
+            logger.error("handleRequest error",e);
         }
     }
 }
