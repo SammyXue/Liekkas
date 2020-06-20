@@ -11,20 +11,10 @@ public class RpcRequest extends StandardRequest {
 
     public RpcRequest(Protocol.Request protocolRequest) {
         super(protocolRequest);
-        List<Protocol.Param> params= protocolRequest.getBody().getParamList();
-        if (params==null){
-            throw new UnsupportedOperationException("lack of requestId in rpcRequest");
+        if (!protocolRequest.getHeader().hasRequestId()){
+            throw new RuntimeException("lack of requestId in rpcRequest");
         }
-        String requestId = null ;
-        for (Protocol.Param param : params) {
-            if ("requestId".equals(param.getKey())){
-                requestId = param.getValue();
-            }
-        }
-        if (requestId==null){
-            throw new UnsupportedOperationException("lack of requestId in rpcRequest");
-        }
-        this.requestId = requestId;
+        this.requestId = protocolRequest.getHeader().getRequestId();
 
     }
 

@@ -10,6 +10,7 @@ public class MessageCreater {
 
     /**
      * 客户端请求
+     *
      * @param command
      * @param params
      * @return
@@ -35,6 +36,7 @@ public class MessageCreater {
 
     /**
      * rpc请求
+     *
      * @param command
      * @param args
      * @return
@@ -44,13 +46,19 @@ public class MessageCreater {
                 .setVersion(VERSION)
                 .setCommand(command.name())
                 .setType(2)
+                .setRequestId(UUID.randomUUID().toString())
                 .build();
         Protocol.RequestBody.Builder bodyBuilder = Protocol.RequestBody.newBuilder();
         UUID uuid = UUID.randomUUID();
-        Protocol.Param requestId = Protocol.Param.newBuilder()
-                .setKey("requestId").setValue(String.valueOf(uuid))
-                .build();
-        bodyBuilder.addParam(requestId);
+
+        int paramIndex = 0;
+        for (Object arg : args) {
+            Protocol.Param param = Protocol.Param.newBuilder()
+                    .setKey("param" + paramIndex++)
+                    .setValue(String.valueOf(arg))
+                    .build();
+            bodyBuilder.addParam(param);
+        }
 
 
         Protocol.RequestBody body = bodyBuilder.build();
@@ -58,6 +66,7 @@ public class MessageCreater {
                 .setHeader(header)
                 .setBody(body)
                 .build();
+
         return request;
     }
 

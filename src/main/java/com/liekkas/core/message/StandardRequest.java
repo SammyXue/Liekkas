@@ -36,4 +36,11 @@ public class StandardRequest {
     public String getParamValue(String key) {
         return params.get(key);
     }
+
+    @Override
+    public String toString() {
+        return "StandardRequest{" +
+                "protocolRequest=" + protocolRequest +
+                '}';
+    }
 }

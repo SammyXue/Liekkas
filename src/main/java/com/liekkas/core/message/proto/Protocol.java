@@ -44,7 +44,7 @@ public final class Protocol {
      *command
      * </pre>
      */
-    java.lang.String getCommand();
+    String getCommand();
     /**
      * <code>required string command = 2 [default = "heartBeat"];</code>
      *
@@ -71,6 +71,20 @@ public final class Protocol {
      * </pre>
      */
     int getType();
+
+    /**
+     * <code>optional string requestId = 4;</code>
+     */
+    boolean hasRequestId();
+    /**
+     * <code>optional string requestId = 4;</code>
+     */
+    String getRequestId();
+    /**
+     * <code>optional string requestId = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getRequestIdBytes();
   }
   /**
    * Protobuf type {@code com.xcm.proto.RequestHeader}
@@ -96,7 +110,7 @@ public final class Protocol {
     }
 
     private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
       return this.unknownFields;
@@ -140,6 +154,12 @@ public final class Protocol {
               type_ = input.readInt32();
               break;
             }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
+              requestId_ = bs;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -154,14 +174,14 @@ public final class Protocol {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestHeader_descriptor;
+      return Protocol.internal_static_com_xcm_proto_RequestHeader_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestHeader_fieldAccessorTable
+      return Protocol.internal_static_com_xcm_proto_RequestHeader_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.liekkas.core.message.proto.Protocol.RequestHeader.class, com.liekkas.core.message.proto.Protocol.RequestHeader.Builder.class);
+              RequestHeader.class, Builder.class);
     }
 
     public static com.google.protobuf.Parser<RequestHeader> PARSER =
@@ -174,7 +194,7 @@ public final class Protocol {
       }
     };
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<RequestHeader> getParserForType() {
       return PARSER;
     }
@@ -204,7 +224,7 @@ public final class Protocol {
     }
 
     public static final int COMMAND_FIELD_NUMBER = 2;
-    private java.lang.Object command_;
+    private Object command_;
     /**
      * <code>required string command = 2 [default = "heartBeat"];</code>
      *
@@ -222,14 +242,14 @@ public final class Protocol {
      *command
      * </pre>
      */
-    public java.lang.String getCommand() {
-      java.lang.Object ref = command_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getCommand() {
+      Object ref = command_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
           command_ = s;
         }
@@ -245,11 +265,11 @@ public final class Protocol {
      */
     public com.google.protobuf.ByteString
         getCommandBytes() {
-      java.lang.Object ref = command_;
-      if (ref instanceof java.lang.String) {
+      Object ref = command_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         command_ = b;
         return b;
       } else {
@@ -280,10 +300,53 @@ public final class Protocol {
       return type_;
     }
 
+    public static final int REQUESTID_FIELD_NUMBER = 4;
+    private Object requestId_;
+    /**
+     * <code>optional string requestId = 4;</code>
+     */
+    public boolean hasRequestId() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional string requestId = 4;</code>
+     */
+    public String getRequestId() {
+      Object ref = requestId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          requestId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string requestId = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRequestIdBytes() {
+      Object ref = requestId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        requestId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       version_ = 1;
       command_ = "heartBeat";
       type_ = 0;
+      requestId_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -319,6 +382,9 @@ public final class Protocol {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt32(3, type_);
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getRequestIdBytes());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -340,65 +406,69 @@ public final class Protocol {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(3, type_);
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getRequestIdBytes());
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
+    @Override
+    protected Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseFrom(
+    public static RequestHeader parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseFrom(
+    public static RequestHeader parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseFrom(byte[] data)
+    public static RequestHeader parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseFrom(
+    public static RequestHeader parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseFrom(java.io.InputStream input)
+    public static RequestHeader parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseFrom(
+    public static RequestHeader parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseDelimitedFrom(java.io.InputStream input)
+    public static RequestHeader parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseDelimitedFrom(
+    public static RequestHeader parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseFrom(
+    public static RequestHeader parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestHeader parseFrom(
+    public static RequestHeader parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -407,14 +477,14 @@ public final class Protocol {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.liekkas.core.message.proto.Protocol.RequestHeader prototype) {
+    public static Builder newBuilder(RequestHeader prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -424,17 +494,17 @@ public final class Protocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.xcm.proto.RequestHeader)
-        com.liekkas.core.message.proto.Protocol.RequestHeaderOrBuilder {
+        RequestHeaderOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestHeader_descriptor;
+        return Protocol.internal_static_com_xcm_proto_RequestHeader_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestHeader_fieldAccessorTable
+        return Protocol.internal_static_com_xcm_proto_RequestHeader_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.liekkas.core.message.proto.Protocol.RequestHeader.class, com.liekkas.core.message.proto.Protocol.RequestHeader.Builder.class);
+                RequestHeader.class, Builder.class);
       }
 
       // Construct using com.xcm.proto.Protocol.RequestHeader.newBuilder()
@@ -443,7 +513,7 @@ public final class Protocol {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -463,6 +533,8 @@ public final class Protocol {
         bitField0_ = (bitField0_ & ~0x00000002);
         type_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
+        requestId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -472,23 +544,23 @@ public final class Protocol {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestHeader_descriptor;
+        return Protocol.internal_static_com_xcm_proto_RequestHeader_descriptor;
       }
 
-      public com.liekkas.core.message.proto.Protocol.RequestHeader getDefaultInstanceForType() {
-        return com.liekkas.core.message.proto.Protocol.RequestHeader.getDefaultInstance();
+      public RequestHeader getDefaultInstanceForType() {
+        return RequestHeader.getDefaultInstance();
       }
 
-      public com.liekkas.core.message.proto.Protocol.RequestHeader build() {
-        com.liekkas.core.message.proto.Protocol.RequestHeader result = buildPartial();
+      public RequestHeader build() {
+        RequestHeader result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.liekkas.core.message.proto.Protocol.RequestHeader buildPartial() {
-        com.liekkas.core.message.proto.Protocol.RequestHeader result = new com.liekkas.core.message.proto.Protocol.RequestHeader(this);
+      public RequestHeader buildPartial() {
+        RequestHeader result = new RequestHeader(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -503,22 +575,26 @@ public final class Protocol {
           to_bitField0_ |= 0x00000004;
         }
         result.type_ = type_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.requestId_ = requestId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.liekkas.core.message.proto.Protocol.RequestHeader) {
-          return mergeFrom((com.liekkas.core.message.proto.Protocol.RequestHeader)other);
+        if (other instanceof RequestHeader) {
+          return mergeFrom((RequestHeader)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.liekkas.core.message.proto.Protocol.RequestHeader other) {
-        if (other == com.liekkas.core.message.proto.Protocol.RequestHeader.getDefaultInstance()) return this;
+      public Builder mergeFrom(RequestHeader other) {
+        if (other == RequestHeader.getDefaultInstance()) return this;
         if (other.hasVersion()) {
           setVersion(other.getVersion());
         }
@@ -529,6 +605,11 @@ public final class Protocol {
         }
         if (other.hasType()) {
           setType(other.getType());
+        }
+        if (other.hasRequestId()) {
+          bitField0_ |= 0x00000008;
+          requestId_ = other.requestId_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -554,11 +635,11 @@ public final class Protocol {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.liekkas.core.message.proto.Protocol.RequestHeader parsedMessage = null;
+        RequestHeader parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.liekkas.core.message.proto.Protocol.RequestHeader) e.getUnfinishedMessage();
+          parsedMessage = (RequestHeader) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -617,7 +698,7 @@ public final class Protocol {
         return this;
       }
 
-      private java.lang.Object command_ = "heartBeat";
+      private Object command_ = "heartBeat";
       /**
        * <code>required string command = 2 [default = "heartBeat"];</code>
        *
@@ -635,18 +716,18 @@ public final class Protocol {
        *command
        * </pre>
        */
-      public java.lang.String getCommand() {
-        java.lang.Object ref = command_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getCommand() {
+        Object ref = command_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
             command_ = s;
           }
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -658,11 +739,11 @@ public final class Protocol {
        */
       public com.google.protobuf.ByteString
           getCommandBytes() {
-        java.lang.Object ref = command_;
+        Object ref = command_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           command_ = b;
           return b;
         } else {
@@ -677,7 +758,7 @@ public final class Protocol {
        * </pre>
        */
       public Builder setCommand(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -765,6 +846,82 @@ public final class Protocol {
         return this;
       }
 
+      private Object requestId_ = "";
+      /**
+       * <code>optional string requestId = 4;</code>
+       */
+      public boolean hasRequestId() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string requestId = 4;</code>
+       */
+      public String getRequestId() {
+        Object ref = requestId_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            requestId_ = s;
+          }
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <code>optional string requestId = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRequestIdBytes() {
+        Object ref = requestId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          requestId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string requestId = 4;</code>
+       */
+      public Builder setRequestId(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        requestId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string requestId = 4;</code>
+       */
+      public Builder clearRequestId() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        requestId_ = getDefaultInstance().getRequestId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string requestId = 4;</code>
+       */
+      public Builder setRequestIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        requestId_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:com.xcm.proto.RequestHeader)
     }
 
@@ -783,12 +940,12 @@ public final class Protocol {
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
-    java.util.List<com.liekkas.core.message.proto.Protocol.Param>
+    java.util.List<Param>
         getParamList();
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
-    com.liekkas.core.message.proto.Protocol.Param getParam(int index);
+    Param getParam(int index);
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
@@ -796,12 +953,12 @@ public final class Protocol {
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
-    java.util.List<? extends com.liekkas.core.message.proto.Protocol.ParamOrBuilder>
+    java.util.List<? extends ParamOrBuilder>
         getParamOrBuilderList();
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
-    com.liekkas.core.message.proto.Protocol.ParamOrBuilder getParamOrBuilder(
+    ParamOrBuilder getParamOrBuilder(
         int index);
   }
   /**
@@ -828,7 +985,7 @@ public final class Protocol {
     }
 
     private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
       return this.unknownFields;
@@ -858,10 +1015,10 @@ public final class Protocol {
             }
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                param_ = new java.util.ArrayList<com.liekkas.core.message.proto.Protocol.Param>();
+                param_ = new java.util.ArrayList<Param>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              param_.add(input.readMessage(com.liekkas.core.message.proto.Protocol.Param.PARSER, extensionRegistry));
+              param_.add(input.readMessage(Param.PARSER, extensionRegistry));
               break;
             }
           }
@@ -881,14 +1038,14 @@ public final class Protocol {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestBody_descriptor;
+      return Protocol.internal_static_com_xcm_proto_RequestBody_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestBody_fieldAccessorTable
+      return Protocol.internal_static_com_xcm_proto_RequestBody_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.liekkas.core.message.proto.Protocol.RequestBody.class, com.liekkas.core.message.proto.Protocol.RequestBody.Builder.class);
+              RequestBody.class, Builder.class);
     }
 
     public static com.google.protobuf.Parser<RequestBody> PARSER =
@@ -901,23 +1058,23 @@ public final class Protocol {
       }
     };
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<RequestBody> getParserForType() {
       return PARSER;
     }
 
     public static final int PARAM_FIELD_NUMBER = 1;
-    private java.util.List<com.liekkas.core.message.proto.Protocol.Param> param_;
+    private java.util.List<Param> param_;
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
-    public java.util.List<com.liekkas.core.message.proto.Protocol.Param> getParamList() {
+    public java.util.List<Param> getParamList() {
       return param_;
     }
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
-    public java.util.List<? extends com.liekkas.core.message.proto.Protocol.ParamOrBuilder>
+    public java.util.List<? extends ParamOrBuilder>
         getParamOrBuilderList() {
       return param_;
     }
@@ -930,13 +1087,13 @@ public final class Protocol {
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
-    public com.liekkas.core.message.proto.Protocol.Param getParam(int index) {
+    public Param getParam(int index) {
       return param_.get(index);
     }
     /**
      * <code>repeated .com.xcm.proto.Param param = 1;</code>
      */
-    public com.liekkas.core.message.proto.Protocol.ParamOrBuilder getParamOrBuilder(
+    public ParamOrBuilder getParamOrBuilder(
         int index) {
       return param_.get(index);
     }
@@ -985,59 +1142,59 @@ public final class Protocol {
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
+    @Override
+    protected Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseFrom(
+    public static RequestBody parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseFrom(
+    public static RequestBody parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseFrom(byte[] data)
+    public static RequestBody parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseFrom(
+    public static RequestBody parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseFrom(java.io.InputStream input)
+    public static RequestBody parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseFrom(
+    public static RequestBody parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseDelimitedFrom(java.io.InputStream input)
+    public static RequestBody parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseDelimitedFrom(
+    public static RequestBody parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseFrom(
+    public static RequestBody parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.RequestBody parseFrom(
+    public static RequestBody parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1046,14 +1203,14 @@ public final class Protocol {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.liekkas.core.message.proto.Protocol.RequestBody prototype) {
+    public static Builder newBuilder(RequestBody prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1063,17 +1220,17 @@ public final class Protocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.xcm.proto.RequestBody)
-        com.liekkas.core.message.proto.Protocol.RequestBodyOrBuilder {
+        RequestBodyOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestBody_descriptor;
+        return Protocol.internal_static_com_xcm_proto_RequestBody_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestBody_fieldAccessorTable
+        return Protocol.internal_static_com_xcm_proto_RequestBody_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.liekkas.core.message.proto.Protocol.RequestBody.class, com.liekkas.core.message.proto.Protocol.RequestBody.Builder.class);
+                RequestBody.class, Builder.class);
       }
 
       // Construct using com.xcm.proto.Protocol.RequestBody.newBuilder()
@@ -1082,7 +1239,7 @@ public final class Protocol {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1112,23 +1269,23 @@ public final class Protocol {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_RequestBody_descriptor;
+        return Protocol.internal_static_com_xcm_proto_RequestBody_descriptor;
       }
 
-      public com.liekkas.core.message.proto.Protocol.RequestBody getDefaultInstanceForType() {
-        return com.liekkas.core.message.proto.Protocol.RequestBody.getDefaultInstance();
+      public RequestBody getDefaultInstanceForType() {
+        return RequestBody.getDefaultInstance();
       }
 
-      public com.liekkas.core.message.proto.Protocol.RequestBody build() {
-        com.liekkas.core.message.proto.Protocol.RequestBody result = buildPartial();
+      public RequestBody build() {
+        RequestBody result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.liekkas.core.message.proto.Protocol.RequestBody buildPartial() {
-        com.liekkas.core.message.proto.Protocol.RequestBody result = new com.liekkas.core.message.proto.Protocol.RequestBody(this);
+      public RequestBody buildPartial() {
+        RequestBody result = new RequestBody(this);
         int from_bitField0_ = bitField0_;
         if (paramBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1144,16 +1301,16 @@ public final class Protocol {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.liekkas.core.message.proto.Protocol.RequestBody) {
-          return mergeFrom((com.liekkas.core.message.proto.Protocol.RequestBody)other);
+        if (other instanceof RequestBody) {
+          return mergeFrom((RequestBody)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.liekkas.core.message.proto.Protocol.RequestBody other) {
-        if (other == com.liekkas.core.message.proto.Protocol.RequestBody.getDefaultInstance()) return this;
+      public Builder mergeFrom(RequestBody other) {
+        if (other == RequestBody.getDefaultInstance()) return this;
         if (paramBuilder_ == null) {
           if (!other.param_.isEmpty()) {
             if (param_.isEmpty()) {
@@ -1198,11 +1355,11 @@ public final class Protocol {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.liekkas.core.message.proto.Protocol.RequestBody parsedMessage = null;
+        RequestBody parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.liekkas.core.message.proto.Protocol.RequestBody) e.getUnfinishedMessage();
+          parsedMessage = (RequestBody) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -1213,22 +1370,22 @@ public final class Protocol {
       }
       private int bitField0_;
 
-      private java.util.List<com.liekkas.core.message.proto.Protocol.Param> param_ =
+      private java.util.List<Param> param_ =
         java.util.Collections.emptyList();
       private void ensureParamIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          param_ = new java.util.ArrayList<com.liekkas.core.message.proto.Protocol.Param>(param_);
+          param_ = new java.util.ArrayList<Param>(param_);
           bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.liekkas.core.message.proto.Protocol.Param, com.liekkas.core.message.proto.Protocol.Param.Builder, com.liekkas.core.message.proto.Protocol.ParamOrBuilder> paramBuilder_;
+          Param, Param.Builder, ParamOrBuilder> paramBuilder_;
 
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public java.util.List<com.liekkas.core.message.proto.Protocol.Param> getParamList() {
+      public java.util.List<Param> getParamList() {
         if (paramBuilder_ == null) {
           return java.util.Collections.unmodifiableList(param_);
         } else {
@@ -1248,7 +1405,7 @@ public final class Protocol {
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.Param getParam(int index) {
+      public Param getParam(int index) {
         if (paramBuilder_ == null) {
           return param_.get(index);
         } else {
@@ -1259,7 +1416,7 @@ public final class Protocol {
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
       public Builder setParam(
-          int index, com.liekkas.core.message.proto.Protocol.Param value) {
+          int index, Param value) {
         if (paramBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1276,7 +1433,7 @@ public final class Protocol {
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
       public Builder setParam(
-          int index, com.liekkas.core.message.proto.Protocol.Param.Builder builderForValue) {
+          int index, Param.Builder builderForValue) {
         if (paramBuilder_ == null) {
           ensureParamIsMutable();
           param_.set(index, builderForValue.build());
@@ -1289,7 +1446,7 @@ public final class Protocol {
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public Builder addParam(com.liekkas.core.message.proto.Protocol.Param value) {
+      public Builder addParam(Param value) {
         if (paramBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1306,7 +1463,7 @@ public final class Protocol {
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
       public Builder addParam(
-          int index, com.liekkas.core.message.proto.Protocol.Param value) {
+          int index, Param value) {
         if (paramBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1323,7 +1480,7 @@ public final class Protocol {
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
       public Builder addParam(
-          com.liekkas.core.message.proto.Protocol.Param.Builder builderForValue) {
+          Param.Builder builderForValue) {
         if (paramBuilder_ == null) {
           ensureParamIsMutable();
           param_.add(builderForValue.build());
@@ -1337,7 +1494,7 @@ public final class Protocol {
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
       public Builder addParam(
-          int index, com.liekkas.core.message.proto.Protocol.Param.Builder builderForValue) {
+          int index, Param.Builder builderForValue) {
         if (paramBuilder_ == null) {
           ensureParamIsMutable();
           param_.add(index, builderForValue.build());
@@ -1351,7 +1508,7 @@ public final class Protocol {
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
       public Builder addAllParam(
-          java.lang.Iterable<? extends com.liekkas.core.message.proto.Protocol.Param> values) {
+          Iterable<? extends Param> values) {
         if (paramBuilder_ == null) {
           ensureParamIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1391,14 +1548,14 @@ public final class Protocol {
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.Param.Builder getParamBuilder(
+      public Param.Builder getParamBuilder(
           int index) {
         return getParamFieldBuilder().getBuilder(index);
       }
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.ParamOrBuilder getParamOrBuilder(
+      public ParamOrBuilder getParamOrBuilder(
           int index) {
         if (paramBuilder_ == null) {
           return param_.get(index);  } else {
@@ -1408,7 +1565,7 @@ public final class Protocol {
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public java.util.List<? extends com.liekkas.core.message.proto.Protocol.ParamOrBuilder>
+      public java.util.List<? extends ParamOrBuilder>
            getParamOrBuilderList() {
         if (paramBuilder_ != null) {
           return paramBuilder_.getMessageOrBuilderList();
@@ -1419,31 +1576,31 @@ public final class Protocol {
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.Param.Builder addParamBuilder() {
+      public Param.Builder addParamBuilder() {
         return getParamFieldBuilder().addBuilder(
-            com.liekkas.core.message.proto.Protocol.Param.getDefaultInstance());
+            Param.getDefaultInstance());
       }
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.Param.Builder addParamBuilder(
+      public Param.Builder addParamBuilder(
           int index) {
         return getParamFieldBuilder().addBuilder(
-            index, com.liekkas.core.message.proto.Protocol.Param.getDefaultInstance());
+            index, Param.getDefaultInstance());
       }
       /**
        * <code>repeated .com.xcm.proto.Param param = 1;</code>
        */
-      public java.util.List<com.liekkas.core.message.proto.Protocol.Param.Builder>
+      public java.util.List<Param.Builder>
            getParamBuilderList() {
         return getParamFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.liekkas.core.message.proto.Protocol.Param, com.liekkas.core.message.proto.Protocol.Param.Builder, com.liekkas.core.message.proto.Protocol.ParamOrBuilder>
+          Param, Param.Builder, ParamOrBuilder>
           getParamFieldBuilder() {
         if (paramBuilder_ == null) {
           paramBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              com.liekkas.core.message.proto.Protocol.Param, com.liekkas.core.message.proto.Protocol.Param.Builder, com.liekkas.core.message.proto.Protocol.ParamOrBuilder>(
+              Param, Param.Builder, ParamOrBuilder>(
                   param_,
                   ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
@@ -1475,7 +1632,7 @@ public final class Protocol {
     /**
      * <code>required string key = 1;</code>
      */
-    java.lang.String getKey();
+    String getKey();
     /**
      * <code>required string key = 1;</code>
      */
@@ -1489,7 +1646,7 @@ public final class Protocol {
     /**
      * <code>required string value = 2;</code>
      */
-    java.lang.String getValue();
+    String getValue();
     /**
      * <code>required string value = 2;</code>
      */
@@ -1520,7 +1677,7 @@ public final class Protocol {
     }
 
     private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
       return this.unknownFields;
@@ -1574,14 +1731,14 @@ public final class Protocol {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Param_descriptor;
+      return Protocol.internal_static_com_xcm_proto_Param_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Param_fieldAccessorTable
+      return Protocol.internal_static_com_xcm_proto_Param_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.liekkas.core.message.proto.Protocol.Param.class, com.liekkas.core.message.proto.Protocol.Param.Builder.class);
+              Param.class, Builder.class);
     }
 
     public static com.google.protobuf.Parser<Param> PARSER =
@@ -1594,14 +1751,14 @@ public final class Protocol {
       }
     };
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<Param> getParserForType() {
       return PARSER;
     }
 
     private int bitField0_;
     public static final int KEY_FIELD_NUMBER = 1;
-    private java.lang.Object key_;
+    private Object key_;
     /**
      * <code>required string key = 1;</code>
      */
@@ -1611,14 +1768,14 @@ public final class Protocol {
     /**
      * <code>required string key = 1;</code>
      */
-    public java.lang.String getKey() {
-      java.lang.Object ref = key_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getKey() {
+      Object ref = key_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
           key_ = s;
         }
@@ -1630,11 +1787,11 @@ public final class Protocol {
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
-      java.lang.Object ref = key_;
-      if (ref instanceof java.lang.String) {
+      Object ref = key_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         key_ = b;
         return b;
       } else {
@@ -1643,7 +1800,7 @@ public final class Protocol {
     }
 
     public static final int VALUE_FIELD_NUMBER = 2;
-    private java.lang.Object value_;
+    private Object value_;
     /**
      * <code>required string value = 2;</code>
      */
@@ -1653,14 +1810,14 @@ public final class Protocol {
     /**
      * <code>required string value = 2;</code>
      */
-    public java.lang.String getValue() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getValue() {
+      Object ref = value_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
           value_ = s;
         }
@@ -1672,11 +1829,11 @@ public final class Protocol {
      */
     public com.google.protobuf.ByteString
         getValueBytes() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
+      Object ref = value_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         value_ = b;
         return b;
       } else {
@@ -1738,59 +1895,59 @@ public final class Protocol {
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
+    @Override
+    protected Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
-    public static com.liekkas.core.message.proto.Protocol.Param parseFrom(
+    public static Param parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseFrom(
+    public static Param parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseFrom(byte[] data)
+    public static Param parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseFrom(
+    public static Param parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseFrom(java.io.InputStream input)
+    public static Param parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseFrom(
+    public static Param parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseDelimitedFrom(java.io.InputStream input)
+    public static Param parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseDelimitedFrom(
+    public static Param parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseFrom(
+    public static Param parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Param parseFrom(
+    public static Param parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1799,14 +1956,14 @@ public final class Protocol {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.liekkas.core.message.proto.Protocol.Param prototype) {
+    public static Builder newBuilder(Param prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1816,17 +1973,17 @@ public final class Protocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.xcm.proto.Param)
-        com.liekkas.core.message.proto.Protocol.ParamOrBuilder {
+        ParamOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Param_descriptor;
+        return Protocol.internal_static_com_xcm_proto_Param_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Param_fieldAccessorTable
+        return Protocol.internal_static_com_xcm_proto_Param_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.liekkas.core.message.proto.Protocol.Param.class, com.liekkas.core.message.proto.Protocol.Param.Builder.class);
+                Param.class, Builder.class);
       }
 
       // Construct using com.xcm.proto.Protocol.Param.newBuilder()
@@ -1835,7 +1992,7 @@ public final class Protocol {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1862,23 +2019,23 @@ public final class Protocol {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Param_descriptor;
+        return Protocol.internal_static_com_xcm_proto_Param_descriptor;
       }
 
-      public com.liekkas.core.message.proto.Protocol.Param getDefaultInstanceForType() {
-        return com.liekkas.core.message.proto.Protocol.Param.getDefaultInstance();
+      public Param getDefaultInstanceForType() {
+        return Param.getDefaultInstance();
       }
 
-      public com.liekkas.core.message.proto.Protocol.Param build() {
-        com.liekkas.core.message.proto.Protocol.Param result = buildPartial();
+      public Param build() {
+        Param result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.liekkas.core.message.proto.Protocol.Param buildPartial() {
-        com.liekkas.core.message.proto.Protocol.Param result = new com.liekkas.core.message.proto.Protocol.Param(this);
+      public Param buildPartial() {
+        Param result = new Param(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1895,16 +2052,16 @@ public final class Protocol {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.liekkas.core.message.proto.Protocol.Param) {
-          return mergeFrom((com.liekkas.core.message.proto.Protocol.Param)other);
+        if (other instanceof Param) {
+          return mergeFrom((Param)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.liekkas.core.message.proto.Protocol.Param other) {
-        if (other == com.liekkas.core.message.proto.Protocol.Param.getDefaultInstance()) return this;
+      public Builder mergeFrom(Param other) {
+        if (other == Param.getDefaultInstance()) return this;
         if (other.hasKey()) {
           bitField0_ |= 0x00000001;
           key_ = other.key_;
@@ -1935,11 +2092,11 @@ public final class Protocol {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.liekkas.core.message.proto.Protocol.Param parsedMessage = null;
+        Param parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.liekkas.core.message.proto.Protocol.Param) e.getUnfinishedMessage();
+          parsedMessage = (Param) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -1950,7 +2107,7 @@ public final class Protocol {
       }
       private int bitField0_;
 
-      private java.lang.Object key_ = "";
+      private Object key_ = "";
       /**
        * <code>required string key = 1;</code>
        */
@@ -1960,18 +2117,18 @@ public final class Protocol {
       /**
        * <code>required string key = 1;</code>
        */
-      public java.lang.String getKey() {
-        java.lang.Object ref = key_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getKey() {
+        Object ref = key_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
             key_ = s;
           }
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -1979,11 +2136,11 @@ public final class Protocol {
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
-        java.lang.Object ref = key_;
+        Object ref = key_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           key_ = b;
           return b;
         } else {
@@ -1994,7 +2151,7 @@ public final class Protocol {
        * <code>required string key = 1;</code>
        */
       public Builder setKey(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -2026,7 +2183,7 @@ public final class Protocol {
         return this;
       }
 
-      private java.lang.Object value_ = "";
+      private Object value_ = "";
       /**
        * <code>required string value = 2;</code>
        */
@@ -2036,18 +2193,18 @@ public final class Protocol {
       /**
        * <code>required string value = 2;</code>
        */
-      public java.lang.String getValue() {
-        java.lang.Object ref = value_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getValue() {
+        Object ref = value_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
             value_ = s;
           }
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -2055,11 +2212,11 @@ public final class Protocol {
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
-        java.lang.Object ref = value_;
+        Object ref = value_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           value_ = b;
           return b;
         } else {
@@ -2070,7 +2227,7 @@ public final class Protocol {
        * <code>required string value = 2;</code>
        */
       public Builder setValue(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -2124,11 +2281,11 @@ public final class Protocol {
     /**
      * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
      */
-    com.liekkas.core.message.proto.Protocol.RequestHeader getHeader();
+    RequestHeader getHeader();
     /**
      * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
      */
-    com.liekkas.core.message.proto.Protocol.RequestHeaderOrBuilder getHeaderOrBuilder();
+    RequestHeaderOrBuilder getHeaderOrBuilder();
 
     /**
      * <code>required .com.xcm.proto.RequestBody body = 2;</code>
@@ -2137,11 +2294,11 @@ public final class Protocol {
     /**
      * <code>required .com.xcm.proto.RequestBody body = 2;</code>
      */
-    com.liekkas.core.message.proto.Protocol.RequestBody getBody();
+    RequestBody getBody();
     /**
      * <code>required .com.xcm.proto.RequestBody body = 2;</code>
      */
-    com.liekkas.core.message.proto.Protocol.RequestBodyOrBuilder getBodyOrBuilder();
+    RequestBodyOrBuilder getBodyOrBuilder();
   }
   /**
    * Protobuf type {@code com.xcm.proto.Request}
@@ -2167,7 +2324,7 @@ public final class Protocol {
     }
 
     private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
       return this.unknownFields;
@@ -2196,11 +2353,11 @@ public final class Protocol {
               break;
             }
             case 10: {
-              com.liekkas.core.message.proto.Protocol.RequestHeader.Builder subBuilder = null;
+              RequestHeader.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = header_.toBuilder();
               }
-              header_ = input.readMessage(com.liekkas.core.message.proto.Protocol.RequestHeader.PARSER, extensionRegistry);
+              header_ = input.readMessage(RequestHeader.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(header_);
                 header_ = subBuilder.buildPartial();
@@ -2209,11 +2366,11 @@ public final class Protocol {
               break;
             }
             case 18: {
-              com.liekkas.core.message.proto.Protocol.RequestBody.Builder subBuilder = null;
+              RequestBody.Builder subBuilder = null;
               if (((bitField0_ & 0x00000002) == 0x00000002)) {
                 subBuilder = body_.toBuilder();
               }
-              body_ = input.readMessage(com.liekkas.core.message.proto.Protocol.RequestBody.PARSER, extensionRegistry);
+              body_ = input.readMessage(RequestBody.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(body_);
                 body_ = subBuilder.buildPartial();
@@ -2235,14 +2392,14 @@ public final class Protocol {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Request_descriptor;
+      return Protocol.internal_static_com_xcm_proto_Request_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Request_fieldAccessorTable
+      return Protocol.internal_static_com_xcm_proto_Request_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.liekkas.core.message.proto.Protocol.Request.class, com.liekkas.core.message.proto.Protocol.Request.Builder.class);
+              Request.class, Builder.class);
     }
 
     public static com.google.protobuf.Parser<Request> PARSER =
@@ -2255,14 +2412,14 @@ public final class Protocol {
       }
     };
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<Request> getParserForType() {
       return PARSER;
     }
 
     private int bitField0_;
     public static final int HEADER_FIELD_NUMBER = 1;
-    private com.liekkas.core.message.proto.Protocol.RequestHeader header_;
+    private RequestHeader header_;
     /**
      * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
      */
@@ -2272,18 +2429,18 @@ public final class Protocol {
     /**
      * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
      */
-    public com.liekkas.core.message.proto.Protocol.RequestHeader getHeader() {
+    public RequestHeader getHeader() {
       return header_;
     }
     /**
      * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
      */
-    public com.liekkas.core.message.proto.Protocol.RequestHeaderOrBuilder getHeaderOrBuilder() {
+    public RequestHeaderOrBuilder getHeaderOrBuilder() {
       return header_;
     }
 
     public static final int BODY_FIELD_NUMBER = 2;
-    private com.liekkas.core.message.proto.Protocol.RequestBody body_;
+    private RequestBody body_;
     /**
      * <code>required .com.xcm.proto.RequestBody body = 2;</code>
      */
@@ -2293,19 +2450,19 @@ public final class Protocol {
     /**
      * <code>required .com.xcm.proto.RequestBody body = 2;</code>
      */
-    public com.liekkas.core.message.proto.Protocol.RequestBody getBody() {
+    public RequestBody getBody() {
       return body_;
     }
     /**
      * <code>required .com.xcm.proto.RequestBody body = 2;</code>
      */
-    public com.liekkas.core.message.proto.Protocol.RequestBodyOrBuilder getBodyOrBuilder() {
+    public RequestBodyOrBuilder getBodyOrBuilder() {
       return body_;
     }
 
     private void initFields() {
-      header_ = com.liekkas.core.message.proto.Protocol.RequestHeader.getDefaultInstance();
-      body_ = com.liekkas.core.message.proto.Protocol.RequestBody.getDefaultInstance();
+      header_ = RequestHeader.getDefaultInstance();
+      body_ = RequestBody.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2365,59 +2522,59 @@ public final class Protocol {
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
+    @Override
+    protected Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
-    public static com.liekkas.core.message.proto.Protocol.Request parseFrom(
+    public static Request parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseFrom(
+    public static Request parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseFrom(byte[] data)
+    public static Request parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseFrom(
+    public static Request parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseFrom(java.io.InputStream input)
+    public static Request parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseFrom(
+    public static Request parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseDelimitedFrom(java.io.InputStream input)
+    public static Request parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseDelimitedFrom(
+    public static Request parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseFrom(
+    public static Request parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Request parseFrom(
+    public static Request parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2426,14 +2583,14 @@ public final class Protocol {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.liekkas.core.message.proto.Protocol.Request prototype) {
+    public static Builder newBuilder(Request prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -2443,17 +2600,17 @@ public final class Protocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.xcm.proto.Request)
-        com.liekkas.core.message.proto.Protocol.RequestOrBuilder {
+        RequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Request_descriptor;
+        return Protocol.internal_static_com_xcm_proto_Request_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Request_fieldAccessorTable
+        return Protocol.internal_static_com_xcm_proto_Request_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.liekkas.core.message.proto.Protocol.Request.class, com.liekkas.core.message.proto.Protocol.Request.Builder.class);
+                Request.class, Builder.class);
       }
 
       // Construct using com.xcm.proto.Protocol.Request.newBuilder()
@@ -2462,7 +2619,7 @@ public final class Protocol {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -2479,13 +2636,13 @@ public final class Protocol {
       public Builder clear() {
         super.clear();
         if (headerBuilder_ == null) {
-          header_ = com.liekkas.core.message.proto.Protocol.RequestHeader.getDefaultInstance();
+          header_ = RequestHeader.getDefaultInstance();
         } else {
           headerBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
         if (bodyBuilder_ == null) {
-          body_ = com.liekkas.core.message.proto.Protocol.RequestBody.getDefaultInstance();
+          body_ = RequestBody.getDefaultInstance();
         } else {
           bodyBuilder_.clear();
         }
@@ -2499,23 +2656,23 @@ public final class Protocol {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Request_descriptor;
+        return Protocol.internal_static_com_xcm_proto_Request_descriptor;
       }
 
-      public com.liekkas.core.message.proto.Protocol.Request getDefaultInstanceForType() {
-        return com.liekkas.core.message.proto.Protocol.Request.getDefaultInstance();
+      public Request getDefaultInstanceForType() {
+        return Request.getDefaultInstance();
       }
 
-      public com.liekkas.core.message.proto.Protocol.Request build() {
-        com.liekkas.core.message.proto.Protocol.Request result = buildPartial();
+      public Request build() {
+        Request result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.liekkas.core.message.proto.Protocol.Request buildPartial() {
-        com.liekkas.core.message.proto.Protocol.Request result = new com.liekkas.core.message.proto.Protocol.Request(this);
+      public Request buildPartial() {
+        Request result = new Request(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -2540,16 +2697,16 @@ public final class Protocol {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.liekkas.core.message.proto.Protocol.Request) {
-          return mergeFrom((com.liekkas.core.message.proto.Protocol.Request)other);
+        if (other instanceof Request) {
+          return mergeFrom((Request)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.liekkas.core.message.proto.Protocol.Request other) {
-        if (other == com.liekkas.core.message.proto.Protocol.Request.getDefaultInstance()) return this;
+      public Builder mergeFrom(Request other) {
+        if (other == Request.getDefaultInstance()) return this;
         if (other.hasHeader()) {
           mergeHeader(other.getHeader());
         }
@@ -2584,11 +2741,11 @@ public final class Protocol {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.liekkas.core.message.proto.Protocol.Request parsedMessage = null;
+        Request parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.liekkas.core.message.proto.Protocol.Request) e.getUnfinishedMessage();
+          parsedMessage = (Request) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -2599,9 +2756,9 @@ public final class Protocol {
       }
       private int bitField0_;
 
-      private com.liekkas.core.message.proto.Protocol.RequestHeader header_ = com.liekkas.core.message.proto.Protocol.RequestHeader.getDefaultInstance();
+      private RequestHeader header_ = RequestHeader.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.liekkas.core.message.proto.Protocol.RequestHeader, com.liekkas.core.message.proto.Protocol.RequestHeader.Builder, com.liekkas.core.message.proto.Protocol.RequestHeaderOrBuilder> headerBuilder_;
+          RequestHeader, RequestHeader.Builder, RequestHeaderOrBuilder> headerBuilder_;
       /**
        * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
        */
@@ -2611,7 +2768,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.RequestHeader getHeader() {
+      public RequestHeader getHeader() {
         if (headerBuilder_ == null) {
           return header_;
         } else {
@@ -2621,7 +2778,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
        */
-      public Builder setHeader(com.liekkas.core.message.proto.Protocol.RequestHeader value) {
+      public Builder setHeader(RequestHeader value) {
         if (headerBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2638,7 +2795,7 @@ public final class Protocol {
        * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
        */
       public Builder setHeader(
-          com.liekkas.core.message.proto.Protocol.RequestHeader.Builder builderForValue) {
+          RequestHeader.Builder builderForValue) {
         if (headerBuilder_ == null) {
           header_ = builderForValue.build();
           onChanged();
@@ -2651,12 +2808,12 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
        */
-      public Builder mergeHeader(com.liekkas.core.message.proto.Protocol.RequestHeader value) {
+      public Builder mergeHeader(RequestHeader value) {
         if (headerBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              header_ != com.liekkas.core.message.proto.Protocol.RequestHeader.getDefaultInstance()) {
+              header_ != RequestHeader.getDefaultInstance()) {
             header_ =
-              com.liekkas.core.message.proto.Protocol.RequestHeader.newBuilder(header_).mergeFrom(value).buildPartial();
+              RequestHeader.newBuilder(header_).mergeFrom(value).buildPartial();
           } else {
             header_ = value;
           }
@@ -2672,7 +2829,7 @@ public final class Protocol {
        */
       public Builder clearHeader() {
         if (headerBuilder_ == null) {
-          header_ = com.liekkas.core.message.proto.Protocol.RequestHeader.getDefaultInstance();
+          header_ = RequestHeader.getDefaultInstance();
           onChanged();
         } else {
           headerBuilder_.clear();
@@ -2683,7 +2840,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.RequestHeader.Builder getHeaderBuilder() {
+      public RequestHeader.Builder getHeaderBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getHeaderFieldBuilder().getBuilder();
@@ -2691,7 +2848,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.RequestHeaderOrBuilder getHeaderOrBuilder() {
+      public RequestHeaderOrBuilder getHeaderOrBuilder() {
         if (headerBuilder_ != null) {
           return headerBuilder_.getMessageOrBuilder();
         } else {
@@ -2702,11 +2859,11 @@ public final class Protocol {
        * <code>required .com.xcm.proto.RequestHeader header = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          com.liekkas.core.message.proto.Protocol.RequestHeader, com.liekkas.core.message.proto.Protocol.RequestHeader.Builder, com.liekkas.core.message.proto.Protocol.RequestHeaderOrBuilder>
+          RequestHeader, RequestHeader.Builder, RequestHeaderOrBuilder>
           getHeaderFieldBuilder() {
         if (headerBuilder_ == null) {
           headerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.liekkas.core.message.proto.Protocol.RequestHeader, com.liekkas.core.message.proto.Protocol.RequestHeader.Builder, com.liekkas.core.message.proto.Protocol.RequestHeaderOrBuilder>(
+              RequestHeader, RequestHeader.Builder, RequestHeaderOrBuilder>(
                   getHeader(),
                   getParentForChildren(),
                   isClean());
@@ -2715,9 +2872,9 @@ public final class Protocol {
         return headerBuilder_;
       }
 
-      private com.liekkas.core.message.proto.Protocol.RequestBody body_ = com.liekkas.core.message.proto.Protocol.RequestBody.getDefaultInstance();
+      private RequestBody body_ = RequestBody.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.liekkas.core.message.proto.Protocol.RequestBody, com.liekkas.core.message.proto.Protocol.RequestBody.Builder, com.liekkas.core.message.proto.Protocol.RequestBodyOrBuilder> bodyBuilder_;
+          RequestBody, RequestBody.Builder, RequestBodyOrBuilder> bodyBuilder_;
       /**
        * <code>required .com.xcm.proto.RequestBody body = 2;</code>
        */
@@ -2727,7 +2884,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestBody body = 2;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.RequestBody getBody() {
+      public RequestBody getBody() {
         if (bodyBuilder_ == null) {
           return body_;
         } else {
@@ -2737,7 +2894,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestBody body = 2;</code>
        */
-      public Builder setBody(com.liekkas.core.message.proto.Protocol.RequestBody value) {
+      public Builder setBody(RequestBody value) {
         if (bodyBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2754,7 +2911,7 @@ public final class Protocol {
        * <code>required .com.xcm.proto.RequestBody body = 2;</code>
        */
       public Builder setBody(
-          com.liekkas.core.message.proto.Protocol.RequestBody.Builder builderForValue) {
+          RequestBody.Builder builderForValue) {
         if (bodyBuilder_ == null) {
           body_ = builderForValue.build();
           onChanged();
@@ -2767,12 +2924,12 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestBody body = 2;</code>
        */
-      public Builder mergeBody(com.liekkas.core.message.proto.Protocol.RequestBody value) {
+      public Builder mergeBody(RequestBody value) {
         if (bodyBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              body_ != com.liekkas.core.message.proto.Protocol.RequestBody.getDefaultInstance()) {
+              body_ != RequestBody.getDefaultInstance()) {
             body_ =
-              com.liekkas.core.message.proto.Protocol.RequestBody.newBuilder(body_).mergeFrom(value).buildPartial();
+              RequestBody.newBuilder(body_).mergeFrom(value).buildPartial();
           } else {
             body_ = value;
           }
@@ -2788,7 +2945,7 @@ public final class Protocol {
        */
       public Builder clearBody() {
         if (bodyBuilder_ == null) {
-          body_ = com.liekkas.core.message.proto.Protocol.RequestBody.getDefaultInstance();
+          body_ = RequestBody.getDefaultInstance();
           onChanged();
         } else {
           bodyBuilder_.clear();
@@ -2799,7 +2956,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestBody body = 2;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.RequestBody.Builder getBodyBuilder() {
+      public RequestBody.Builder getBodyBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getBodyFieldBuilder().getBuilder();
@@ -2807,7 +2964,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.RequestBody body = 2;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.RequestBodyOrBuilder getBodyOrBuilder() {
+      public RequestBodyOrBuilder getBodyOrBuilder() {
         if (bodyBuilder_ != null) {
           return bodyBuilder_.getMessageOrBuilder();
         } else {
@@ -2818,11 +2975,11 @@ public final class Protocol {
        * <code>required .com.xcm.proto.RequestBody body = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          com.liekkas.core.message.proto.Protocol.RequestBody, com.liekkas.core.message.proto.Protocol.RequestBody.Builder, com.liekkas.core.message.proto.Protocol.RequestBodyOrBuilder>
+          RequestBody, RequestBody.Builder, RequestBodyOrBuilder>
           getBodyFieldBuilder() {
         if (bodyBuilder_ == null) {
           bodyBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.liekkas.core.message.proto.Protocol.RequestBody, com.liekkas.core.message.proto.Protocol.RequestBody.Builder, com.liekkas.core.message.proto.Protocol.RequestBodyOrBuilder>(
+              RequestBody, RequestBody.Builder, RequestBodyOrBuilder>(
                   getBody(),
                   getParentForChildren(),
                   isClean());
@@ -2912,7 +3069,7 @@ public final class Protocol {
      *返回id
      * </pre>
      */
-    java.lang.String getResponseId();
+    String getResponseId();
     /**
      * <code>optional string responseId = 4;</code>
      *
@@ -2947,7 +3104,7 @@ public final class Protocol {
     }
 
     private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
       return this.unknownFields;
@@ -3010,14 +3167,14 @@ public final class Protocol {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_ResponseHeader_descriptor;
+      return Protocol.internal_static_com_xcm_proto_ResponseHeader_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_ResponseHeader_fieldAccessorTable
+      return Protocol.internal_static_com_xcm_proto_ResponseHeader_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.liekkas.core.message.proto.Protocol.ResponseHeader.class, com.liekkas.core.message.proto.Protocol.ResponseHeader.Builder.class);
+              ResponseHeader.class, Builder.class);
     }
 
     public static com.google.protobuf.Parser<ResponseHeader> PARSER =
@@ -3030,7 +3187,7 @@ public final class Protocol {
       }
     };
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<ResponseHeader> getParserForType() {
       return PARSER;
     }
@@ -3106,7 +3263,7 @@ public final class Protocol {
     }
 
     public static final int RESPONSEID_FIELD_NUMBER = 4;
-    private java.lang.Object responseId_;
+    private Object responseId_;
     /**
      * <code>optional string responseId = 4;</code>
      *
@@ -3124,14 +3281,14 @@ public final class Protocol {
      *返回id
      * </pre>
      */
-    public java.lang.String getResponseId() {
-      java.lang.Object ref = responseId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getResponseId() {
+      Object ref = responseId_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
           responseId_ = s;
         }
@@ -3147,11 +3304,11 @@ public final class Protocol {
      */
     public com.google.protobuf.ByteString
         getResponseIdBytes() {
-      java.lang.Object ref = responseId_;
-      if (ref instanceof java.lang.String) {
+      Object ref = responseId_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         responseId_ = b;
         return b;
       } else {
@@ -3229,59 +3386,59 @@ public final class Protocol {
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
+    @Override
+    protected Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseFrom(
+    public static ResponseHeader parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseFrom(
+    public static ResponseHeader parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseFrom(byte[] data)
+    public static ResponseHeader parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseFrom(
+    public static ResponseHeader parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseFrom(java.io.InputStream input)
+    public static ResponseHeader parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseFrom(
+    public static ResponseHeader parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseDelimitedFrom(java.io.InputStream input)
+    public static ResponseHeader parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseDelimitedFrom(
+    public static ResponseHeader parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseFrom(
+    public static ResponseHeader parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.ResponseHeader parseFrom(
+    public static ResponseHeader parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3290,14 +3447,14 @@ public final class Protocol {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.liekkas.core.message.proto.Protocol.ResponseHeader prototype) {
+    public static Builder newBuilder(ResponseHeader prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -3307,17 +3464,17 @@ public final class Protocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.xcm.proto.ResponseHeader)
-        com.liekkas.core.message.proto.Protocol.ResponseHeaderOrBuilder {
+        ResponseHeaderOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_ResponseHeader_descriptor;
+        return Protocol.internal_static_com_xcm_proto_ResponseHeader_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_ResponseHeader_fieldAccessorTable
+        return Protocol.internal_static_com_xcm_proto_ResponseHeader_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.liekkas.core.message.proto.Protocol.ResponseHeader.class, com.liekkas.core.message.proto.Protocol.ResponseHeader.Builder.class);
+                ResponseHeader.class, Builder.class);
       }
 
       // Construct using com.xcm.proto.Protocol.ResponseHeader.newBuilder()
@@ -3326,7 +3483,7 @@ public final class Protocol {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -3357,23 +3514,23 @@ public final class Protocol {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_ResponseHeader_descriptor;
+        return Protocol.internal_static_com_xcm_proto_ResponseHeader_descriptor;
       }
 
-      public com.liekkas.core.message.proto.Protocol.ResponseHeader getDefaultInstanceForType() {
-        return com.liekkas.core.message.proto.Protocol.ResponseHeader.getDefaultInstance();
+      public ResponseHeader getDefaultInstanceForType() {
+        return ResponseHeader.getDefaultInstance();
       }
 
-      public com.liekkas.core.message.proto.Protocol.ResponseHeader build() {
-        com.liekkas.core.message.proto.Protocol.ResponseHeader result = buildPartial();
+      public ResponseHeader build() {
+        ResponseHeader result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.liekkas.core.message.proto.Protocol.ResponseHeader buildPartial() {
-        com.liekkas.core.message.proto.Protocol.ResponseHeader result = new com.liekkas.core.message.proto.Protocol.ResponseHeader(this);
+      public ResponseHeader buildPartial() {
+        ResponseHeader result = new ResponseHeader(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3398,16 +3555,16 @@ public final class Protocol {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.liekkas.core.message.proto.Protocol.ResponseHeader) {
-          return mergeFrom((com.liekkas.core.message.proto.Protocol.ResponseHeader)other);
+        if (other instanceof ResponseHeader) {
+          return mergeFrom((ResponseHeader)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.liekkas.core.message.proto.Protocol.ResponseHeader other) {
-        if (other == com.liekkas.core.message.proto.Protocol.ResponseHeader.getDefaultInstance()) return this;
+      public Builder mergeFrom(ResponseHeader other) {
+        if (other == ResponseHeader.getDefaultInstance()) return this;
         if (other.hasVersion()) {
           setVersion(other.getVersion());
         }
@@ -3442,11 +3599,11 @@ public final class Protocol {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.liekkas.core.message.proto.Protocol.ResponseHeader parsedMessage = null;
+        ResponseHeader parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.liekkas.core.message.proto.Protocol.ResponseHeader) e.getUnfinishedMessage();
+          parsedMessage = (ResponseHeader) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -3601,7 +3758,7 @@ public final class Protocol {
         return this;
       }
 
-      private java.lang.Object responseId_ = "";
+      private Object responseId_ = "";
       /**
        * <code>optional string responseId = 4;</code>
        *
@@ -3619,18 +3776,18 @@ public final class Protocol {
        *返回id
        * </pre>
        */
-      public java.lang.String getResponseId() {
-        java.lang.Object ref = responseId_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getResponseId() {
+        Object ref = responseId_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
             responseId_ = s;
           }
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -3642,11 +3799,11 @@ public final class Protocol {
        */
       public com.google.protobuf.ByteString
           getResponseIdBytes() {
-        java.lang.Object ref = responseId_;
+        Object ref = responseId_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           responseId_ = b;
           return b;
         } else {
@@ -3661,7 +3818,7 @@ public final class Protocol {
        * </pre>
        */
       public Builder setResponseId(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3723,11 +3880,11 @@ public final class Protocol {
     /**
      * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
      */
-    com.liekkas.core.message.proto.Protocol.ResponseHeader getHeader();
+    ResponseHeader getHeader();
     /**
      * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
      */
-    com.liekkas.core.message.proto.Protocol.ResponseHeaderOrBuilder getHeaderOrBuilder();
+    ResponseHeaderOrBuilder getHeaderOrBuilder();
 
     /**
      * <code>required bytes body = 2;</code>
@@ -3762,7 +3919,7 @@ public final class Protocol {
     }
 
     private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
       return this.unknownFields;
@@ -3791,11 +3948,11 @@ public final class Protocol {
               break;
             }
             case 10: {
-              com.liekkas.core.message.proto.Protocol.ResponseHeader.Builder subBuilder = null;
+              ResponseHeader.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = header_.toBuilder();
               }
-              header_ = input.readMessage(com.liekkas.core.message.proto.Protocol.ResponseHeader.PARSER, extensionRegistry);
+              header_ = input.readMessage(ResponseHeader.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(header_);
                 header_ = subBuilder.buildPartial();
@@ -3822,14 +3979,14 @@ public final class Protocol {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Response_descriptor;
+      return Protocol.internal_static_com_xcm_proto_Response_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Response_fieldAccessorTable
+      return Protocol.internal_static_com_xcm_proto_Response_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.liekkas.core.message.proto.Protocol.Response.class, com.liekkas.core.message.proto.Protocol.Response.Builder.class);
+              Response.class, Builder.class);
     }
 
     public static com.google.protobuf.Parser<Response> PARSER =
@@ -3842,14 +3999,14 @@ public final class Protocol {
       }
     };
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<Response> getParserForType() {
       return PARSER;
     }
 
     private int bitField0_;
     public static final int HEADER_FIELD_NUMBER = 1;
-    private com.liekkas.core.message.proto.Protocol.ResponseHeader header_;
+    private ResponseHeader header_;
     /**
      * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
      */
@@ -3859,13 +4016,13 @@ public final class Protocol {
     /**
      * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
      */
-    public com.liekkas.core.message.proto.Protocol.ResponseHeader getHeader() {
+    public ResponseHeader getHeader() {
       return header_;
     }
     /**
      * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
      */
-    public com.liekkas.core.message.proto.Protocol.ResponseHeaderOrBuilder getHeaderOrBuilder() {
+    public ResponseHeaderOrBuilder getHeaderOrBuilder() {
       return header_;
     }
 
@@ -3885,7 +4042,7 @@ public final class Protocol {
     }
 
     private void initFields() {
-      header_ = com.liekkas.core.message.proto.Protocol.ResponseHeader.getDefaultInstance();
+      header_ = ResponseHeader.getDefaultInstance();
       body_ = com.google.protobuf.ByteString.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
@@ -3942,59 +4099,59 @@ public final class Protocol {
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
+    @Override
+    protected Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
-    public static com.liekkas.core.message.proto.Protocol.Response parseFrom(
+    public static Response parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseFrom(
+    public static Response parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseFrom(byte[] data)
+    public static Response parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseFrom(
+    public static Response parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseFrom(java.io.InputStream input)
+    public static Response parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseFrom(
+    public static Response parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseDelimitedFrom(java.io.InputStream input)
+    public static Response parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseDelimitedFrom(
+    public static Response parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseFrom(
+    public static Response parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.liekkas.core.message.proto.Protocol.Response parseFrom(
+    public static Response parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4003,14 +4160,14 @@ public final class Protocol {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.liekkas.core.message.proto.Protocol.Response prototype) {
+    public static Builder newBuilder(Response prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -4020,17 +4177,17 @@ public final class Protocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.xcm.proto.Response)
-        com.liekkas.core.message.proto.Protocol.ResponseOrBuilder {
+        ResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Response_descriptor;
+        return Protocol.internal_static_com_xcm_proto_Response_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Response_fieldAccessorTable
+        return Protocol.internal_static_com_xcm_proto_Response_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.liekkas.core.message.proto.Protocol.Response.class, com.liekkas.core.message.proto.Protocol.Response.Builder.class);
+                Response.class, Builder.class);
       }
 
       // Construct using com.xcm.proto.Protocol.Response.newBuilder()
@@ -4039,7 +4196,7 @@ public final class Protocol {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -4055,7 +4212,7 @@ public final class Protocol {
       public Builder clear() {
         super.clear();
         if (headerBuilder_ == null) {
-          header_ = com.liekkas.core.message.proto.Protocol.ResponseHeader.getDefaultInstance();
+          header_ = ResponseHeader.getDefaultInstance();
         } else {
           headerBuilder_.clear();
         }
@@ -4071,23 +4228,23 @@ public final class Protocol {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.liekkas.core.message.proto.Protocol.internal_static_com_xcm_proto_Response_descriptor;
+        return Protocol.internal_static_com_xcm_proto_Response_descriptor;
       }
 
-      public com.liekkas.core.message.proto.Protocol.Response getDefaultInstanceForType() {
-        return com.liekkas.core.message.proto.Protocol.Response.getDefaultInstance();
+      public Response getDefaultInstanceForType() {
+        return Response.getDefaultInstance();
       }
 
-      public com.liekkas.core.message.proto.Protocol.Response build() {
-        com.liekkas.core.message.proto.Protocol.Response result = buildPartial();
+      public Response build() {
+        Response result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.liekkas.core.message.proto.Protocol.Response buildPartial() {
-        com.liekkas.core.message.proto.Protocol.Response result = new com.liekkas.core.message.proto.Protocol.Response(this);
+      public Response buildPartial() {
+        Response result = new Response(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -4108,16 +4265,16 @@ public final class Protocol {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.liekkas.core.message.proto.Protocol.Response) {
-          return mergeFrom((com.liekkas.core.message.proto.Protocol.Response)other);
+        if (other instanceof Response) {
+          return mergeFrom((Response)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.liekkas.core.message.proto.Protocol.Response other) {
-        if (other == com.liekkas.core.message.proto.Protocol.Response.getDefaultInstance()) return this;
+      public Builder mergeFrom(Response other) {
+        if (other == Response.getDefaultInstance()) return this;
         if (other.hasHeader()) {
           mergeHeader(other.getHeader());
         }
@@ -4148,11 +4305,11 @@ public final class Protocol {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.liekkas.core.message.proto.Protocol.Response parsedMessage = null;
+        Response parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.liekkas.core.message.proto.Protocol.Response) e.getUnfinishedMessage();
+          parsedMessage = (Response) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -4163,9 +4320,9 @@ public final class Protocol {
       }
       private int bitField0_;
 
-      private com.liekkas.core.message.proto.Protocol.ResponseHeader header_ = com.liekkas.core.message.proto.Protocol.ResponseHeader.getDefaultInstance();
+      private ResponseHeader header_ = ResponseHeader.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.liekkas.core.message.proto.Protocol.ResponseHeader, com.liekkas.core.message.proto.Protocol.ResponseHeader.Builder, com.liekkas.core.message.proto.Protocol.ResponseHeaderOrBuilder> headerBuilder_;
+          ResponseHeader, ResponseHeader.Builder, ResponseHeaderOrBuilder> headerBuilder_;
       /**
        * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
        */
@@ -4175,7 +4332,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.ResponseHeader getHeader() {
+      public ResponseHeader getHeader() {
         if (headerBuilder_ == null) {
           return header_;
         } else {
@@ -4185,7 +4342,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
        */
-      public Builder setHeader(com.liekkas.core.message.proto.Protocol.ResponseHeader value) {
+      public Builder setHeader(ResponseHeader value) {
         if (headerBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4202,7 +4359,7 @@ public final class Protocol {
        * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
        */
       public Builder setHeader(
-          com.liekkas.core.message.proto.Protocol.ResponseHeader.Builder builderForValue) {
+          ResponseHeader.Builder builderForValue) {
         if (headerBuilder_ == null) {
           header_ = builderForValue.build();
           onChanged();
@@ -4215,12 +4372,12 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
        */
-      public Builder mergeHeader(com.liekkas.core.message.proto.Protocol.ResponseHeader value) {
+      public Builder mergeHeader(ResponseHeader value) {
         if (headerBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              header_ != com.liekkas.core.message.proto.Protocol.ResponseHeader.getDefaultInstance()) {
+              header_ != ResponseHeader.getDefaultInstance()) {
             header_ =
-              com.liekkas.core.message.proto.Protocol.ResponseHeader.newBuilder(header_).mergeFrom(value).buildPartial();
+              ResponseHeader.newBuilder(header_).mergeFrom(value).buildPartial();
           } else {
             header_ = value;
           }
@@ -4236,7 +4393,7 @@ public final class Protocol {
        */
       public Builder clearHeader() {
         if (headerBuilder_ == null) {
-          header_ = com.liekkas.core.message.proto.Protocol.ResponseHeader.getDefaultInstance();
+          header_ = ResponseHeader.getDefaultInstance();
           onChanged();
         } else {
           headerBuilder_.clear();
@@ -4247,7 +4404,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.ResponseHeader.Builder getHeaderBuilder() {
+      public ResponseHeader.Builder getHeaderBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getHeaderFieldBuilder().getBuilder();
@@ -4255,7 +4412,7 @@ public final class Protocol {
       /**
        * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
        */
-      public com.liekkas.core.message.proto.Protocol.ResponseHeaderOrBuilder getHeaderOrBuilder() {
+      public ResponseHeaderOrBuilder getHeaderOrBuilder() {
         if (headerBuilder_ != null) {
           return headerBuilder_.getMessageOrBuilder();
         } else {
@@ -4266,11 +4423,11 @@ public final class Protocol {
        * <code>required .com.xcm.proto.ResponseHeader header = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          com.liekkas.core.message.proto.Protocol.ResponseHeader, com.liekkas.core.message.proto.Protocol.ResponseHeader.Builder, com.liekkas.core.message.proto.Protocol.ResponseHeaderOrBuilder>
+          ResponseHeader, ResponseHeader.Builder, ResponseHeaderOrBuilder>
           getHeaderFieldBuilder() {
         if (headerBuilder_ == null) {
           headerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.liekkas.core.message.proto.Protocol.ResponseHeader, com.liekkas.core.message.proto.Protocol.ResponseHeader.Builder, com.liekkas.core.message.proto.Protocol.ResponseHeaderOrBuilder>(
+              ResponseHeader, ResponseHeader.Builder, ResponseHeaderOrBuilder>(
                   getHeader(),
                   getParentForChildren(),
                   isClean());
@@ -4363,19 +4520,20 @@ public final class Protocol {
   private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
-      "\n\016protocol.proto\022\rcom.xcm.proto\"M\n\rReque" +
+    String[] descriptorData = {
+      "\n\016protocol.proto\022\rcom.xcm.proto\"`\n\rReque" +
       "stHeader\022\022\n\007version\030\001 \002(\005:\0011\022\032\n\007command\030" +
-      "\002 \002(\t:\theartBeat\022\014\n\004type\030\003 \002(\005\"2\n\013Reques" +
-      "tBody\022#\n\005param\030\001 \003(\0132\024.com.xcm.proto.Par" +
-      "am\"#\n\005Param\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"" +
-      "a\n\007Request\022,\n\006header\030\001 \002(\0132\034.com.xcm.pro" +
-      "to.RequestHeader\022(\n\004body\030\002 \002(\0132\032.com.xcm" +
-      ".proto.RequestBody\"[\n\016ResponseHeader\022\022\n\007" +
-      "version\030\001 \002(\005:\0011\022\022\n\007msgType\030\002 \002(\005:\0011\022\r\n\005" +
-      "state\030\003 \001(\005\022\022\n\nresponseId\030\004 \001(\t\"G\n\010Respo",
-      "nse\022-\n\006header\030\001 \002(\0132\035.com.xcm.proto.Resp" +
-      "onseHeader\022\014\n\004body\030\002 \002(\014"
+      "\002 \002(\t:\theartBeat\022\014\n\004type\030\003 \002(\005\022\021\n\treques" +
+      "tId\030\004 \001(\t\"2\n\013RequestBody\022#\n\005param\030\001 \003(\0132" +
+      "\024.com.xcm.proto.Param\"#\n\005Param\022\013\n\003key\030\001 " +
+      "\002(\t\022\r\n\005value\030\002 \002(\t\"a\n\007Request\022,\n\006header\030" +
+      "\001 \002(\0132\034.com.xcm.proto.RequestHeader\022(\n\004b" +
+      "ody\030\002 \002(\0132\032.com.xcm.proto.RequestBody\"[\n" +
+      "\016ResponseHeader\022\022\n\007version\030\001 \002(\005:\0011\022\022\n\007m" +
+      "sgType\030\002 \002(\005:\0011\022\r\n\005state\030\003 \001(\005\022\022\n\nrespon",
+      "seId\030\004 \001(\t\"G\n\010Response\022-\n\006header\030\001 \002(\0132\035" +
+      ".com.xcm.proto.ResponseHeader\022\014\n\004body\030\002 " +
+      "\002(\014"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4394,37 +4552,37 @@ public final class Protocol {
     internal_static_com_xcm_proto_RequestHeader_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_RequestHeader_descriptor,
-        new java.lang.String[] { "Version", "Command", "Type", });
+        new String[] { "Version", "Command", "Type", "RequestId", });
     internal_static_com_xcm_proto_RequestBody_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_xcm_proto_RequestBody_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_RequestBody_descriptor,
-        new java.lang.String[] { "Param", });
+        new String[] { "Param", });
     internal_static_com_xcm_proto_Param_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_com_xcm_proto_Param_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_Param_descriptor,
-        new java.lang.String[] { "Key", "Value", });
+        new String[] { "Key", "Value", });
     internal_static_com_xcm_proto_Request_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_com_xcm_proto_Request_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_Request_descriptor,
-        new java.lang.String[] { "Header", "Body", });
+        new String[] { "Header", "Body", });
     internal_static_com_xcm_proto_ResponseHeader_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_com_xcm_proto_ResponseHeader_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_ResponseHeader_descriptor,
-        new java.lang.String[] { "Version", "MsgType", "State", "ResponseId", });
+        new String[] { "Version", "MsgType", "State", "ResponseId", });
     internal_static_com_xcm_proto_Response_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_com_xcm_proto_Response_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_xcm_proto_Response_descriptor,
-        new java.lang.String[] { "Header", "Body", });
+        new String[] { "Header", "Body", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

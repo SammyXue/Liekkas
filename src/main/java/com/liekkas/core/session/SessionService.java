@@ -4,7 +4,10 @@ import com.liekkas.core.BeanGetter;
 import com.liekkas.core.init.InitService;
 import org.springframework.stereotype.Component;
 
+import java.security.SecureRandom;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.liekkas.core.init.InitConstants.SESSION_MANAGER_NAME;
@@ -39,7 +42,7 @@ public class SessionService implements InitService {
     }
 
     public String generateSessionId() {
-        return "sessions";
+        return UUID.randomUUID().toString();
     }
 
     public Session createNewSession() {

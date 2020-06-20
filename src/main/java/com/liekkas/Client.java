@@ -19,8 +19,8 @@ public class Client {
         try {
 
         for (int i = 0; i < 100; i++) {
-            new Thread(() -> {
-                RpcFuture rpcFuture = proxy.send(Command.Login);
+//            new Thread(() -> {
+                RpcFuture rpcFuture = proxy.send(Command.Login,1,"");
                 try {
                     rpcFuture.get();
                 } catch (InterruptedException e) {
@@ -28,9 +28,9 @@ public class Client {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-            }
+//            }
 
-            ).start();
+//            ).start();
         }
 
         }finally {

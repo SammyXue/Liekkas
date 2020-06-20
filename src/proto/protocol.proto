@@ -1,9 +1,10 @@
-package com.xcm.proto;
+package com.liekkas.core.message.proto;
 
 message RequestHeader {
     required int32 version = 1 [default = 1]; //版本号
     required string command = 2 [default = "heartBeat"]; //command
     required int32 type = 3 ; //请求种类 1 客户端请求 2 rpc
+    optional string requestId = 4;
 
 }
 
