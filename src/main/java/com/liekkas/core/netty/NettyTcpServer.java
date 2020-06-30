@@ -13,15 +13,14 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import org.apache.log4j.Logger;
 
 
-public class NettyServer {
+public class NettyTcpServer {
 
-    private static Logger logger = Logger.getLogger(NettyServer.class);
-
+    private static Logger logger = Logger.getLogger(NettyTcpServer.class);
     private final EventLoopGroup bossGroup;
     private final EventLoopGroup workerGroup;
     private NettyServerConfig config;
 
-    public NettyServer(NettyServerConfig config) {
+    public NettyTcpServer(NettyServerConfig config) {
         this.bossGroup = new NioEventLoopGroup(
                 config.getBossGroupSize());
         this.workerGroup = new NioEventLoopGroup(

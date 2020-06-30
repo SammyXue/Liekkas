@@ -2,7 +2,7 @@ package com.liekkas.core.init;
 
 import com.liekkas.core.config.NettyServerConfig;
 import com.liekkas.core.config.NettyServerConfigImpl;
-import com.liekkas.core.netty.NettyServer;
+import com.liekkas.core.netty.NettyTcpServer;
 import com.liekkas.core.server.Server;
 import com.liekkas.core.server.ServerManager;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ public class NetInitService implements InitService {
     public void init() throws Exception {
 
         NettyServerConfig nettyServerConfig = new NettyServerConfigImpl(InitConstants.severProperties);
-        NettyServer nettyServer = new NettyServer(nettyServerConfig);
+        NettyTcpServer nettyServer = new NettyTcpServer(nettyServerConfig);
         nettyServer.start();
         Server server = new Server(nettyServerConfig);
         ServerManager.getInstance().registerSelf(server);
