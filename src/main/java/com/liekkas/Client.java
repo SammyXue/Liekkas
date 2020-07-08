@@ -13,7 +13,7 @@ public class Client {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         Server server = new Server();
         server.setIp("0.0.0.0");
-        server.setPort(5656);
+        server.setPort(12948);//kcptun 加速
 
         RpcProxy proxy = new RpcProxy(new RpcNettyClient(server));
         try {
