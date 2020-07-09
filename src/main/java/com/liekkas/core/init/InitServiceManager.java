@@ -20,13 +20,21 @@ import static com.liekkas.core.init.InitConstants.INIT_SERVICE_MANAGER;
 
 @Component(INIT_SERVICE_MANAGER)
 public class InitServiceManager implements ApplicationContextAware, InitializingBean {
+    private static final String BANNER = "\n" +
+            " ___       ___  _______   ___  __    ___  __    ________  ________      \n" +
+            "|\\  \\     |\\  \\|\\  ___ \\ |\\  \\|\\  \\ |\\  \\|\\  \\ |\\   __  \\|\\   ____\\     \n" +
+            "\\ \\  \\    \\ \\  \\ \\   __/|\\ \\  \\/  /|\\ \\  \\/  /|\\ \\  \\|\\  \\ \\  \\___|_    \n" +
+            " \\ \\  \\    \\ \\  \\ \\  \\_|/_\\ \\   ___  \\ \\   ___  \\ \\   __  \\ \\_____  \\   \n" +
+            "  \\ \\  \\____\\ \\  \\ \\  \\_|\\ \\ \\  \\\\ \\  \\ \\  \\\\ \\  \\ \\  \\ \\  \\|____|\\  \\  \n" +
+            "   \\ \\_______\\ \\__\\ \\_______\\ \\__\\\\ \\__\\ \\__\\\\ \\__\\ \\__\\ \\__\\____\\_\\  \\ \n" +
+            "    \\|_______|\\|__|\\|_______|\\|__| \\|__|\\|__| \\|__|\\|__|\\|__|\\_________\\\n" +
+            "                                                            \\|_________|";
     private static Logger logger = Logger.getLogger(NetInitService.class);
 
 
     public static InitServiceManager getInstance() {
         return (InitServiceManager) BeanGetter.getBean(INIT_SERVICE_MANAGER);
     }
-
 
 
     private ApplicationContext applicationContext;
@@ -39,6 +47,7 @@ public class InitServiceManager implements ApplicationContextAware, Initializing
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        logger.info(BANNER);
         BeanGetter.setApplicationContext(applicationContext);
         try {
             InitConstants.severProperties.load((new FileInputStream(InitConstants.RESOURCE_PATH + "server.properties")));
@@ -61,7 +70,7 @@ public class InitServiceManager implements ApplicationContextAware, Initializing
 
             }
         }
-        list.sort(Comparator.comparingInt(e -> e.priority()));
+        list.sort(Comparator.comparingInt(InitService::priority));
         for (InitService initService : list) {
             String clzName = initService.getClass().getName();
             try {
