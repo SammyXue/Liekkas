@@ -56,7 +56,6 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
@@ -75,11 +74,15 @@
         </dependency>
     </dependencies>
 
-    <modules>
-        <module>liekkas-comm</module>
-        <module>liekkas-game</module>
-        <module>liekkas-gateway</module>
-        <module>liekkas-login</module>
+    <profiles>
+        <profile>
+            <modules>
+                <module>liekkas-comm</module>
+                <module>liekkas-game</module>
+                <module>liekkas-gateway</module>
+                <module>liekkas-login</module>
+            </modules>
+        </profile>
+    </profiles>
 
-    </modules>
 </project>
