@@ -9,7 +9,6 @@
         <artifactId>liekkas</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.liekkas</groupId>
     <artifactId>liekkas-gateway</artifactId>
     <dependencies>
         <dependency>
