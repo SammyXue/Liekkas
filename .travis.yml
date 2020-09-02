@@ -5,4 +5,4 @@ install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true
 services:
   - mysql
   - redis
-script: mvn test
+script: mvn install
