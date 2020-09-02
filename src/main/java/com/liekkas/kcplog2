@@ -1,0 +1,60 @@
+----------------------
+server
+udp data
+conv:1
+cmd:81
+frg:3
+wnd:32
+ts:328099851
+sn:0
+una:0
+len:10
+data:liekkaslie
+----------------------
+server
+udp data
+conv:1
+cmd:81
+frg:2
+wnd:32
+ts:328099953
+sn:1
+una:0
+len:10
+data:kkasliekka
+----------------------
+server
+udp data
+conv:1
+cmd:81
+frg:1
+wnd:32
+ts:328099953
+sn:2
+una:0
+len:10
+data:sliekkasli
+----------------------
+server
+udp data
+conv:1
+cmd:81
+frg:0
+wnd:32
+ts:328100051
+sn:3
+una:0
+len:5
+data:ekkas
+----------------------
+server
+udp data
+conv:1
+cmd:81
+frg:0
+wnd:32
+ts:328100151
+sn:3
+una:0
+len:5
+data:ekkas

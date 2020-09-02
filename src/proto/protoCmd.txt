@@ -1,1 +1,0 @@
-protoc -I=E:\Liekkas\src\proto --java_out=E:\Liekkas\src\main\java\ E:\Liekkas\src\proto\protocol.proto
