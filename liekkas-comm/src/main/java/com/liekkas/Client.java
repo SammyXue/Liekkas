@@ -1,5 +1,6 @@
 package com.liekkas;
 
+import com.liekkas.core.constants.ServerType;
 import com.liekkas.core.init.InitConstants;
 import com.liekkas.core.message.Command;
 import com.liekkas.core.netty.RpcNettyClient;
@@ -14,13 +15,15 @@ public class Client {
         Server server = new Server();
         server.setIp("0.0.0.0");
         server.setPort(5657);//kcptun 加速
+        server.setServerId(1);
+        server.setServerType(ServerType.lOGIN.getType());
 
         RpcProxy proxy = new RpcProxy(new RpcNettyClient(server));
         try {
 
-        for (int i = 0; i < 100; i++) {
-            new Thread(() -> {
-                RpcFuture rpcFuture = proxy.sendRpc(Command.Login,1,"");
+            for (int i = 0; i < 100; i++) {
+//            new Thread(() -> {
+                RpcFuture rpcFuture = proxy.sendRpc(Command.Login, 1, "");
                 try {
                     rpcFuture.get();
                 } catch (InterruptedException e) {
@@ -30,13 +33,12 @@ public class Client {
                 }
             }
 
-            ).start();
-        }
+//            ).start();
+//        }
 
-        }finally {
+        } finally {
             proxy.disconnect();
         }
-
 
 
     }

@@ -1,5 +1,7 @@
 package com.liekkas.core.constants;
 
+import com.liekkas.core.exception.ServiceException;
+
 /**
  * 游戏服务器的种类，目前有三类，可向后拓展
  */
@@ -21,6 +23,6 @@ public enum ServerType {
         for (ServerType serverType : ServerType.values()) {
             if (serverType.type == type) return serverType.name();
         }
-        throw new RuntimeException("unknown serverType type:" + type);
+        return null;
     }
 }

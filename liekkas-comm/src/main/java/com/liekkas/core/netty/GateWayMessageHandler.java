@@ -2,7 +2,9 @@ package com.liekkas.core.netty;
 
 import com.liekkas.core.BeanGetter;
 import com.liekkas.core.constants.ServerType;
+import com.liekkas.core.exception.ServiceException;
 import com.liekkas.core.init.ZkService;
+import com.liekkas.core.invoker.ActionInvoker;
 import com.liekkas.core.message.MessageCreater;
 import com.liekkas.core.message.StandardRequest;
 import com.liekkas.core.message.proto.Protocol;
@@ -15,13 +17,18 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GateWayMessageHandler extends ChannelInboundHandlerAdapter {
-    static Map<String, RpcNettyClient> map = new ConcurrentHashMap<>();
+    private static Map<String, RpcNettyClient> map = new ConcurrentHashMap<>();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         StandardRequest request = (StandardRequest) msg;
-
-        String serverKey = ServerType.getNameByType(request.getProtocolRequest().getHeader().getServerType()) + "_" + request.getProtocolRequest().getHeader().getServerId();
+        int serverType = request.getProtocolRequest().getHeader().getServerType();
+        String serverTypeName = ServerType.getNameByType(serverType);
+        if (serverTypeName == null) {
+            ctx.writeAndFlush(ActionInvoker.genErrorResponse(new ServiceException("unknown server type:" + serverType), request.getRequestId()));
+            return;
+        }
+        String serverKey = serverTypeName + "_" + request.getProtocolRequest().getHeader().getServerId();
         RpcNettyClient client = map.get(serverKey);
         if (client == null) {
             Server server = ServerManager.getInstance().getServer(serverKey);
