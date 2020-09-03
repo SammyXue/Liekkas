@@ -4,6 +4,7 @@ package com.liekkas.core.netty;
 import com.liekkas.core.message.Command;
 import com.liekkas.core.message.MessageCreater;
 import com.liekkas.core.message.proto.Protocol;
+import com.liekkas.core.server.Server;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -75,7 +76,10 @@ public class SocketClient {
             Protocol.Param password = Protocol.Param.newBuilder().setKey("password").setValue("12asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddsadsadasd3").build();
             Protocol.Param sessionId = Protocol.Param.newBuilder().setKey("session").setValue("sessions").build();
 
-            Protocol.Request request = MessageCreater.generateRequest(Command.Login, userId, password, sessionId);
+            Server server = new Server();
+            server.setIp("localhost");
+            server.setPort(5656);
+            Protocol.Request request = MessageCreater.generateRequest(server,Command.Login, userId, password, sessionId);
             int length = request.toByteArray().length;
             byte[] bytes = new byte[length + 4];
             System.arraycopy(request.toByteArray(), 0, bytes, 4, length);

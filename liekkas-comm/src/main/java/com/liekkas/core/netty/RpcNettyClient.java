@@ -23,25 +23,23 @@ public class RpcNettyClient {
     private static final int MAX_FRAME_LENGTH = Integer.parseInt(InitConstants.severProperties.getProperty("server.maxFrameLength", "10240"));
     private static Logger logger = Logger.getLogger(InitConstants.class);
 
-    String host;
-    int port;
+    Server server;
     Bootstrap bootstrap;
     EventLoopGroup group;
     Channel channel;
 
 
     public RpcNettyClient(Server server) {
-        this(server.getIp(), server.getPort());
-    }
-
-    private RpcNettyClient(String host, int port) {
-        this.host = host;
-        this.port = port;
+        this.server = server;
         try {
             init();
         } catch (InterruptedException e) {
             logger.error("RpcNettyClient init fail", e);
         }
+    }
+
+    public Server getServer() {
+        return server;
     }
 
     public void init() throws InterruptedException {
@@ -68,7 +66,7 @@ public class RpcNettyClient {
 
             }
         });
-        channel = bootstrap.connect(host, port).sync().channel();
+        channel = bootstrap.connect(server.getIp(), server.getPort()).sync().channel();
 
     }
 
@@ -104,11 +102,5 @@ public class RpcNettyClient {
 
     }
 
-    public static void main(String[] args) throws Exception {
-        RpcNettyClient rpcNettyClient = new RpcNettyClient("127.0.0.1", 5656);
-        Protocol.Param userId = Protocol.Param.newBuilder().setKey("userId").setValue("123").build();
-        Protocol.Param password = Protocol.Param.newBuilder().setKey("password").setValue("123").build();
-        Protocol.Param sessionId = Protocol.Param.newBuilder().setKey("session").setValue("sessions").build();
-        Protocol.Request request = MessageCreater.generateRequest(Command.Login, userId, password, sessionId);
-    }
+
 }

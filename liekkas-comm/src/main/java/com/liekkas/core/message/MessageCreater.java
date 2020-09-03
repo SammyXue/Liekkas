@@ -1,6 +1,8 @@
 package com.liekkas.core.message;
 
+import com.liekkas.core.constants.MessageType;
 import com.liekkas.core.message.proto.Protocol;
+import com.liekkas.core.server.Server;
 
 import java.util.UUID;
 
@@ -15,13 +17,13 @@ public class MessageCreater {
      * @param params
      * @return
      */
-    public static Protocol.Request generateRequest(Command command, Protocol.Param... params) {
+    public static Protocol.Request generateRequest(Server server,Command command, Protocol.Param... params) {
         Protocol.RequestHeader header = Protocol.RequestHeader.newBuilder()
                 .setVersion(VERSION)
                 .setCommand(command.name())
-                .setType(1)
-                .setServerId(1)
-                .setServerType(1)
+                .setType(MessageType.REQUEST.getType())
+                .setServerType(server.getServerType())
+                .setServerId(server.getServerId())
                 .build();
         Protocol.RequestBody.Builder bodyBuilder = Protocol.RequestBody.newBuilder();
         for (Protocol.Param param : params) {
@@ -43,16 +45,15 @@ public class MessageCreater {
      * @param args
      * @return
      */
-    public static Protocol.Request generateRPCRequest(Command command, Object... args) {
+    public static Protocol.Request generateRPCRequest(Server server, Command command, Object... args) {
         Protocol.RequestHeader header = Protocol.RequestHeader.newBuilder()
                 .setVersion(VERSION)
                 .setCommand(command.name())
-                .setType(2)
-                .setServerId(1)
-                .setServerType(2)
+                .setType(MessageType.RPC.getType())
+                .setServerType(server.getServerType())
+                .setServerId(server.getServerId())
                 .build();
         Protocol.RequestBody.Builder bodyBuilder = Protocol.RequestBody.newBuilder();
-        UUID uuid = UUID.randomUUID();
 
         int paramIndex = 0;
         for (Object arg : args) {

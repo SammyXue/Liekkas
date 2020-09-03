@@ -14,13 +14,23 @@ public class RpcProxy {
         this.rpcNettyClient = rpcNettyClient;
     }
 
-    public RpcFuture send(Command command, Object... args) {
-        Protocol.Request request = MessageCreater.generateRPCRequest(command, args);
+    public RpcFuture sendRpc(Command command, Object... args) {
+        Protocol.Request request = MessageCreater.generateRPCRequest(rpcNettyClient.getServer(), command, args);
         return rpcNettyClient.send(new StandardRequest(request));
     }
 
-    public RpcFuture send(Command command, RpcCallback callback, Object... args) {
-        Protocol.Request request = MessageCreater.generateRPCRequest(command, args);
+    public RpcFuture sendRpc(Command command, RpcCallback callback, Object... args) {
+        Protocol.Request request = MessageCreater.generateRPCRequest(rpcNettyClient.getServer(),command, args);
+        return rpcNettyClient.send(new StandardRequest(request), callback);
+    }
+
+    public RpcFuture sendRequest(Command command, Protocol.Param... params) {
+        Protocol.Request request = MessageCreater.generateRequest(rpcNettyClient.getServer(), command, params);
+        return rpcNettyClient.send(new StandardRequest(request));
+    }
+
+    public RpcFuture sendRequest(Command command, RpcCallback callback, Protocol.Param... params) {
+        Protocol.Request request = MessageCreater.generateRequest(rpcNettyClient.getServer(),command, params);
         return rpcNettyClient.send(new StandardRequest(request), callback);
     }
 
