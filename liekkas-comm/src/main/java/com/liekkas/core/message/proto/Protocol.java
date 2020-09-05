@@ -89,6 +89,15 @@ public final class Protocol {
      * <code>required int32 serverId = 5;</code>
      */
     int getServerId();
+
+    /**
+     * <code>required int64 requestId = 6;</code>
+     */
+    boolean hasRequestId();
+    /**
+     * <code>required int64 requestId = 6;</code>
+     */
+    long getRequestId();
   }
   /**
    * Protobuf type {@code com.liekkas.core.message.proto.RequestHeader}
@@ -166,6 +175,11 @@ public final class Protocol {
             case 40: {
               bitField0_ |= 0x00000010;
               serverId_ = input.readInt32();
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000020;
+              requestId_ = input.readInt64();
               break;
             }
           }
@@ -338,12 +352,28 @@ public final class Protocol {
       return serverId_;
     }
 
+    public static final int REQUESTID_FIELD_NUMBER = 6;
+    private long requestId_;
+    /**
+     * <code>required int64 requestId = 6;</code>
+     */
+    public boolean hasRequestId() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>required int64 requestId = 6;</code>
+     */
+    public long getRequestId() {
+      return requestId_;
+    }
+
     private void initFields() {
       version_ = 1;
       command_ = "heartBeat";
       type_ = 0;
       serverType_ = 0;
       serverId_ = 0;
+      requestId_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -371,6 +401,10 @@ public final class Protocol {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasRequestId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -392,6 +426,9 @@ public final class Protocol {
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeInt32(5, serverId_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeInt64(6, requestId_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -421,6 +458,10 @@ public final class Protocol {
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, serverId_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, requestId_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -549,6 +590,8 @@ public final class Protocol {
         bitField0_ = (bitField0_ & ~0x00000008);
         serverId_ = 0;
         bitField0_ = (bitField0_ & ~0x00000010);
+        requestId_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -597,6 +640,10 @@ public final class Protocol {
           to_bitField0_ |= 0x00000010;
         }
         result.serverId_ = serverId_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.requestId_ = requestId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -630,6 +677,9 @@ public final class Protocol {
         if (other.hasServerId()) {
           setServerId(other.getServerId());
         }
+        if (other.hasRequestId()) {
+          setRequestId(other.getRequestId());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -652,6 +702,10 @@ public final class Protocol {
           return false;
         }
         if (!hasServerId()) {
+          
+          return false;
+        }
+        if (!hasRequestId()) {
           
           return false;
         }
@@ -933,6 +987,38 @@ public final class Protocol {
       public Builder clearServerId() {
         bitField0_ = (bitField0_ & ~0x00000010);
         serverId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long requestId_ ;
+      /**
+       * <code>required int64 requestId = 6;</code>
+       */
+      public boolean hasRequestId() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>required int64 requestId = 6;</code>
+       */
+      public long getRequestId() {
+        return requestId_;
+      }
+      /**
+       * <code>required int64 requestId = 6;</code>
+       */
+      public Builder setRequestId(long value) {
+        bitField0_ |= 0x00000020;
+        requestId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int64 requestId = 6;</code>
+       */
+      public Builder clearRequestId() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        requestId_ = 0L;
         onChanged();
         return this;
       }
@@ -3053,7 +3139,7 @@ public final class Protocol {
     int getMsgType();
 
     /**
-     * <code>optional int32 state = 3;</code>
+     * <code>required int32 state = 3;</code>
      *
      * <pre>
      * 当接口返回时 有这个字段 1 success 2 fail
@@ -3061,7 +3147,7 @@ public final class Protocol {
      */
     boolean hasState();
     /**
-     * <code>optional int32 state = 3;</code>
+     * <code>required int32 state = 3;</code>
      *
      * <pre>
      * 当接口返回时 有这个字段 1 success 2 fail
@@ -3070,7 +3156,7 @@ public final class Protocol {
     int getState();
 
     /**
-     * <code>optional string responseId = 4;</code>
+     * <code>required string responseId = 4;</code>
      *
      * <pre>
      *返回id
@@ -3078,7 +3164,7 @@ public final class Protocol {
      */
     boolean hasResponseId();
     /**
-     * <code>optional string responseId = 4;</code>
+     * <code>required string responseId = 4;</code>
      *
      * <pre>
      *返回id
@@ -3086,7 +3172,7 @@ public final class Protocol {
      */
     java.lang.String getResponseId();
     /**
-     * <code>optional string responseId = 4;</code>
+     * <code>required string responseId = 4;</code>
      *
      * <pre>
      *返回id
@@ -3257,7 +3343,7 @@ public final class Protocol {
     public static final int STATE_FIELD_NUMBER = 3;
     private int state_;
     /**
-     * <code>optional int32 state = 3;</code>
+     * <code>required int32 state = 3;</code>
      *
      * <pre>
      * 当接口返回时 有这个字段 1 success 2 fail
@@ -3267,7 +3353,7 @@ public final class Protocol {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional int32 state = 3;</code>
+     * <code>required int32 state = 3;</code>
      *
      * <pre>
      * 当接口返回时 有这个字段 1 success 2 fail
@@ -3280,7 +3366,7 @@ public final class Protocol {
     public static final int RESPONSEID_FIELD_NUMBER = 4;
     private java.lang.Object responseId_;
     /**
-     * <code>optional string responseId = 4;</code>
+     * <code>required string responseId = 4;</code>
      *
      * <pre>
      *返回id
@@ -3290,7 +3376,7 @@ public final class Protocol {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional string responseId = 4;</code>
+     * <code>required string responseId = 4;</code>
      *
      * <pre>
      *返回id
@@ -3311,7 +3397,7 @@ public final class Protocol {
       }
     }
     /**
-     * <code>optional string responseId = 4;</code>
+     * <code>required string responseId = 4;</code>
      *
      * <pre>
      *返回id
@@ -3348,6 +3434,14 @@ public final class Protocol {
         return false;
       }
       if (!hasMsgType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasState()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasResponseId()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -3607,6 +3701,14 @@ public final class Protocol {
           
           return false;
         }
+        if (!hasState()) {
+          
+          return false;
+        }
+        if (!hasResponseId()) {
+          
+          return false;
+        }
         return true;
       }
 
@@ -3727,7 +3829,7 @@ public final class Protocol {
 
       private int state_ ;
       /**
-       * <code>optional int32 state = 3;</code>
+       * <code>required int32 state = 3;</code>
        *
        * <pre>
        * 当接口返回时 有这个字段 1 success 2 fail
@@ -3737,7 +3839,7 @@ public final class Protocol {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional int32 state = 3;</code>
+       * <code>required int32 state = 3;</code>
        *
        * <pre>
        * 当接口返回时 有这个字段 1 success 2 fail
@@ -3747,7 +3849,7 @@ public final class Protocol {
         return state_;
       }
       /**
-       * <code>optional int32 state = 3;</code>
+       * <code>required int32 state = 3;</code>
        *
        * <pre>
        * 当接口返回时 有这个字段 1 success 2 fail
@@ -3760,7 +3862,7 @@ public final class Protocol {
         return this;
       }
       /**
-       * <code>optional int32 state = 3;</code>
+       * <code>required int32 state = 3;</code>
        *
        * <pre>
        * 当接口返回时 有这个字段 1 success 2 fail
@@ -3775,7 +3877,7 @@ public final class Protocol {
 
       private java.lang.Object responseId_ = "";
       /**
-       * <code>optional string responseId = 4;</code>
+       * <code>required string responseId = 4;</code>
        *
        * <pre>
        *返回id
@@ -3785,7 +3887,7 @@ public final class Protocol {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional string responseId = 4;</code>
+       * <code>required string responseId = 4;</code>
        *
        * <pre>
        *返回id
@@ -3806,7 +3908,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string responseId = 4;</code>
+       * <code>required string responseId = 4;</code>
        *
        * <pre>
        *返回id
@@ -3826,7 +3928,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string responseId = 4;</code>
+       * <code>required string responseId = 4;</code>
        *
        * <pre>
        *返回id
@@ -3843,7 +3945,7 @@ public final class Protocol {
         return this;
       }
       /**
-       * <code>optional string responseId = 4;</code>
+       * <code>required string responseId = 4;</code>
        *
        * <pre>
        *返回id
@@ -3856,7 +3958,7 @@ public final class Protocol {
         return this;
       }
       /**
-       * <code>optional string responseId = 4;</code>
+       * <code>required string responseId = 4;</code>
        *
        * <pre>
        *返回id
@@ -4537,20 +4639,21 @@ public final class Protocol {
   static {
     java.lang.String[] descriptorData = {
       "\n\016protocol.proto\022\036com.liekkas.core.messa" +
-      "ge.proto\"s\n\rRequestHeader\022\022\n\007version\030\001 \002" +
-      "(\005:\0011\022\032\n\007command\030\002 \002(\t:\theartBeat\022\014\n\004typ" +
-      "e\030\003 \002(\005\022\022\n\nserverType\030\004 \002(\005\022\020\n\010serverId\030" +
-      "\005 \002(\005\"C\n\013RequestBody\0224\n\005param\030\001 \003(\0132%.co" +
-      "m.liekkas.core.message.proto.Param\"#\n\005Pa" +
-      "ram\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"\203\001\n\007Requ" +
-      "est\022=\n\006header\030\001 \002(\0132-.com.liekkas.core.m" +
-      "essage.proto.RequestHeader\0229\n\004body\030\002 \002(\013" +
-      "2+.com.liekkas.core.message.proto.Reques",
-      "tBody\"[\n\016ResponseHeader\022\022\n\007version\030\001 \002(\005" +
-      ":\0011\022\022\n\007msgType\030\002 \002(\005:\0011\022\r\n\005state\030\003 \001(\005\022\022" +
-      "\n\nresponseId\030\004 \001(\t\"X\n\010Response\022>\n\006header" +
-      "\030\001 \002(\0132..com.liekkas.core.message.proto." +
-      "ResponseHeader\022\014\n\004body\030\002 \002(\014"
+      "ge.proto\"\206\001\n\rRequestHeader\022\022\n\007version\030\001 " +
+      "\002(\005:\0011\022\032\n\007command\030\002 \002(\t:\theartBeat\022\014\n\004ty" +
+      "pe\030\003 \002(\005\022\022\n\nserverType\030\004 \002(\005\022\020\n\010serverId" +
+      "\030\005 \002(\005\022\021\n\trequestId\030\006 \002(\003\"C\n\013RequestBody" +
+      "\0224\n\005param\030\001 \003(\0132%.com.liekkas.core.messa" +
+      "ge.proto.Param\"#\n\005Param\022\013\n\003key\030\001 \002(\t\022\r\n\005" +
+      "value\030\002 \002(\t\"\203\001\n\007Request\022=\n\006header\030\001 \002(\0132" +
+      "-.com.liekkas.core.message.proto.Request" +
+      "Header\0229\n\004body\030\002 \002(\0132+.com.liekkas.core.",
+      "message.proto.RequestBody\"[\n\016ResponseHea" +
+      "der\022\022\n\007version\030\001 \002(\005:\0011\022\022\n\007msgType\030\002 \002(\005" +
+      ":\0011\022\r\n\005state\030\003 \002(\005\022\022\n\nresponseId\030\004 \002(\t\"X" +
+      "\n\010Response\022>\n\006header\030\001 \002(\0132..com.liekkas" +
+      ".core.message.proto.ResponseHeader\022\014\n\004bo" +
+      "dy\030\002 \002(\014"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4569,7 +4672,7 @@ public final class Protocol {
     internal_static_com_liekkas_core_message_proto_RequestHeader_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_liekkas_core_message_proto_RequestHeader_descriptor,
-        new java.lang.String[] { "Version", "Command", "Type", "ServerType", "ServerId", });
+        new java.lang.String[] { "Version", "Command", "Type", "ServerType", "ServerId", "RequestId", });
     internal_static_com_liekkas_core_message_proto_RequestBody_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_liekkas_core_message_proto_RequestBody_fieldAccessorTable = new

@@ -5,36 +5,41 @@ import com.liekkas.core.message.MessageCreater;
 import com.liekkas.core.message.StandardRequest;
 import com.liekkas.core.netty.RpcNettyClient;
 import com.liekkas.core.message.proto.Protocol;
+import com.liekkas.core.server.Server;
 
-public class RpcProxy {
+import java.lang.invoke.SerializedLambda;
+
+public class GateWayProxy {
 
     private RpcNettyClient rpcNettyClient;
+    private Server target;
 
-    public RpcProxy(RpcNettyClient rpcNettyClient) {
+    public GateWayProxy(RpcNettyClient rpcNettyClient, Server target) {
         this.rpcNettyClient = rpcNettyClient;
+        this.target = target;
     }
 
     public RpcFuture sendRpc(Command command, Object... args) {
-        Protocol.Request request = MessageCreater.generateRPCRequest(rpcNettyClient.getServer(), command, args);
+        Protocol.Request request = MessageCreater.generateRPCRequest(target, command, args);
         return rpcNettyClient.send(new StandardRequest(request));
     }
 
     public RpcFuture sendRpc(Command command, RpcCallback callback, Object... args) {
-        Protocol.Request request = MessageCreater.generateRPCRequest(rpcNettyClient.getServer(),command, args);
+        Protocol.Request request = MessageCreater.generateRPCRequest(target, command, args);
         return rpcNettyClient.send(new StandardRequest(request), callback);
     }
 
     public RpcFuture sendRequest(Command command, Protocol.Param... params) {
-        Protocol.Request request = MessageCreater.generateRequest(rpcNettyClient.getServer(), command, params);
+        Protocol.Request request = MessageCreater.generateRequest(target, command, params);
         return rpcNettyClient.send(new StandardRequest(request));
     }
 
     public RpcFuture sendRequest(Command command, RpcCallback callback, Protocol.Param... params) {
-        Protocol.Request request = MessageCreater.generateRequest(rpcNettyClient.getServer(),command, params);
+        Protocol.Request request = MessageCreater.generateRequest(target, command, params);
         return rpcNettyClient.send(new StandardRequest(request), callback);
     }
 
-    public void disconnect(){
+    public void disconnect() {
         rpcNettyClient.shutdown();
     }
 

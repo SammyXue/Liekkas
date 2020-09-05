@@ -35,6 +35,9 @@ public class GateWayMessageHandler extends ChannelInboundHandlerAdapter {
             client = new RpcNettyClient(server);
             map.put(serverKey, client);
         }
+        if (!client.isConnected()){
+            client.reconnect();
+        }
         RpcFuture future = client.send(request);
         Protocol.Response response = future.get();
         ctx.writeAndFlush(response);

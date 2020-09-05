@@ -5,8 +5,10 @@ import com.liekkas.core.message.proto.Protocol;
 import com.liekkas.core.server.Server;
 
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class MessageCreater {
+    static AtomicLong atomicLong = new AtomicLong();
 
     public static final int VERSION = 1;
 
@@ -24,6 +26,7 @@ public class MessageCreater {
                 .setType(MessageType.REQUEST.getType())
                 .setServerType(server.getServerType())
                 .setServerId(server.getServerId())
+                .setRequestId(atomicLong.incrementAndGet())
                 .build();
         Protocol.RequestBody.Builder bodyBuilder = Protocol.RequestBody.newBuilder();
         for (Protocol.Param param : params) {
@@ -52,6 +55,7 @@ public class MessageCreater {
                 .setType(MessageType.RPC.getType())
                 .setServerType(server.getServerType())
                 .setServerId(server.getServerId())
+                .setRequestId(atomicLong.incrementAndGet())
                 .build();
         Protocol.RequestBody.Builder bodyBuilder = Protocol.RequestBody.newBuilder();
 

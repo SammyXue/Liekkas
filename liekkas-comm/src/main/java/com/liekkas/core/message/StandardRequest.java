@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class StandardRequest {
 
-    static AtomicLong atomicLong = new AtomicLong();
 
     private String requestId;
 
@@ -29,7 +28,7 @@ public class StandardRequest {
         if (params.containsKey(SESSION_KEY)) {
             session = SessionService.getInstance().getBySessionId(params.get(SESSION_KEY),false);
         }
-        this.requestId = atomicLong.incrementAndGet() + "";
+        this.requestId = protocolRequest.getHeader().getRequestId()+ "";
 
     }
 

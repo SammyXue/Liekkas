@@ -7,7 +7,7 @@ import com.liekkas.core.exception.ServiceException;
  */
 public enum ServerType {
 
-    GATEWAY(1), lOGIN(2), GAME(3);
+    GATEWAY(1), LOGIN(2), GAME(3);
 
     private int type;
 

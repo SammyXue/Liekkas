@@ -1,12 +1,13 @@
 package com.liekkas.core.netty;
 
+import com.liekkas.core.constants.ServerType;
 import com.liekkas.core.init.InitConstants;
 import com.liekkas.core.message.Command;
-import com.liekkas.core.message.MessageCreater;
 import com.liekkas.core.message.StandardRequest;
 import com.liekkas.core.message.proto.Protocol;
 import com.liekkas.core.rpc.RpcCallback;
 import com.liekkas.core.rpc.RpcFuture;
+import com.liekkas.core.rpc.GateWayProxy;
 import com.liekkas.core.server.Server;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -18,6 +19,8 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import org.apache.log4j.Logger;
+
+import java.util.concurrent.ExecutionException;
 
 public class RpcNettyClient {
     private static final int MAX_FRAME_LENGTH = Integer.parseInt(InitConstants.severProperties.getProperty("server.maxFrameLength", "10240"));
@@ -32,17 +35,13 @@ public class RpcNettyClient {
     public RpcNettyClient(Server server) {
         this.server = server;
         try {
-            init();
+            reconnect();
         } catch (InterruptedException e) {
             logger.error("RpcNettyClient init fail", e);
         }
     }
 
-    public Server getServer() {
-        return server;
-    }
-
-    public void init() throws InterruptedException {
+    public void reconnect() throws InterruptedException {
         bootstrap = new Bootstrap();
 
         group = new NioEventLoopGroup();
